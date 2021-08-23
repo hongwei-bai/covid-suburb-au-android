@@ -8,8 +8,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.bhw.covid_suburb_au.R
 
-val NbaTypography = Typography(
-    defaultFontFamily = FontFamily(Font(R.font.play_regular)),
+val CovidTypography = Typography(
+    defaultFontFamily = FontFamily(Font(R.font.raleway_medium)),
 
     h4 = TextStyle(
         fontWeight = FontWeight.Medium,

@@ -6,14 +6,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun NbaTheme(
-    colors: Colors = MaterialTheme.colors,
+fun CovidTheme(
+    colors: Colors? = null,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+
     MaterialTheme(
-        colors = colors,
-        typography = NbaTypography,
+        colors = colors ?: if (darkTheme) CovidDarkColors else CovidLightColors,
+        typography = CovidTypography,
         shapes = MaterialTheme.shapes,
         content = content
     )

@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="grey80">#323232</color>
-    <color name="grey60">#666666</color>
-    <color name="grey50">#888888</color>
-    <color name="grey40">#bbbbbb</color>
-    <color name="grey20">#dddddd</color>
-
-    <color name="calendar_red_background">#BC2B0C</color>
-    <color name="calendar_red_alpha_background">#E0BC2B0C</color>
-    <color name="calendar_black_alpha_background">#60000000</color>
-    <color name="calendar_black_alpha_past_background">#a0000000</color>
-
-    <color name="nba_white">#FFFFFFFF</color>
-    <color name="nba_blue">#FF17408B</color>
-    <color name="nba_red">#FFC9082A</color>
+    <color name="covid_primary">#FF4b8d8d</color>
+    <color name="covid_light">#FFF5F5F5</color>
+    <color name="covid_accent">#FF8AC0C0</color>
 
 </resources>
