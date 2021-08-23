@@ -1,4 +1,4 @@
-package com.bhw.covid_suburb_au.view.dashboard
+package com.bhw.covid_suburb_au.view.settings
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,14 +9,14 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
-fun Dashboard() {
+fun Settings() {
     val viewModel = hiltViewModel<DashboardViewModel>()
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
         onRefresh = { viewModel.refresh() },
     ) {
-        Text(text = "COVID-19 Dashboard")
+        Text(text = "COVID-19 Settings")
     }
 }
 

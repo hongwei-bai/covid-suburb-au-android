@@ -11,7 +11,6 @@ fun CovidTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-
     MaterialTheme(
         colors = colors ?: if (darkTheme) CovidDarkColors else CovidLightColors,
         typography = CovidTypography,

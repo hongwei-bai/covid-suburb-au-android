@@ -15,7 +15,7 @@ fun BottomNavBar(navController: NavHostController) {
     BottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        val items = listOf(Screen.Dashboard, Screen.Season, Screen.Goal, Screen.Settings)
+        val items = listOf(Screen.Dashboard, Screen.Map, Screen.Trends, Screen.Settings)
         items.forEach {
             BottomNavigationItem(
                 icon = { Icon(it.icon, "") },
