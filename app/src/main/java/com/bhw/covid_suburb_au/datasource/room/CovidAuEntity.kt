@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.bhw.covid_suburb_au.constant.AppConfigurations.Room.API_VERSION
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "team_theme")
+@Entity(tableName = "covid_au_raw")
 data class CovidAuEntity(
     @PrimaryKey
     @SerializedName("api_version")

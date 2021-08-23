@@ -4,6 +4,7 @@ import com.bhw.covid_suburb_au.datasource.network.model.MobileCovidAuRawMapper.m
 import com.bhw.covid_suburb_au.datasource.network.model.MobileCovidAuRawResponse
 import com.bhw.covid_suburb_au.datasource.network.service.MobileCovidService
 import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
+import com.bhw.covid_suburb_au.datasource.room.CovidAuEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +22,8 @@ class MobileCovidRepository @Inject constructor(
         }
     }
 
-    fun getMobileCovidRawData(): Flow<Any> {
-        return covidAuDao.getTeamTheme().onEach {
+    fun getMobileCovidRawData(): Flow<CovidAuEntity> {
+        return covidAuDao.getRawData().onEach {
             it ?: fetchMobileCovidRawDataFromBackend()
         }.filterNotNull()
     }

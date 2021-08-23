@@ -16,7 +16,7 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
     fun preload(onPreloadComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
-            delay(1000)
+            delay(100)
             mobileCovidRepository.fetchMobileCovidRawDataFromBackend()
             viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
                 onPreloadComplete.invoke()

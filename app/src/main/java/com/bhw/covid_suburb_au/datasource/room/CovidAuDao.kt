@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CovidAuDao {
-    @Query("SELECT * FROM team_theme WHERE apiVersion=$API_VERSION")
-    fun getTeamTheme(): Flow<CovidAuEntity?>
+    @Query("SELECT * FROM covid_au_raw WHERE apiVersion=$API_VERSION")
+    fun getRawData(): Flow<CovidAuEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(covidAuEntity: CovidAuEntity)
 
-    @Query("DELETE FROM team_theme")
+    @Query("DELETE FROM covid_au_raw")
     suspend fun clear()
 
-    @Query("SELECT * FROM team_theme")
+    @Query("SELECT * FROM covid_au_raw")
     fun getAllRecords(): List<CovidAuEntity>
 }
