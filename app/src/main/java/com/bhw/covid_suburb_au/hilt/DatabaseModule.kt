@@ -2,8 +2,8 @@ package com.bhw.covid_suburb_au.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.bhw.covid_suburb_au.datasource.room.NbaDatabase
-import com.bhw.covid_suburb_au.datasource.room.TeamThemeDao
+import com.bhw.covid_suburb_au.datasource.room.CovidDatabase
+import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,17 +15,17 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
     @Provides
-    fun provideTeamThemeDao(nbaDatabase: NbaDatabase): TeamThemeDao {
-        return nbaDatabase.teamThemeDao()
+    fun provideMobileCovidAuRawDao(covidDatabase: CovidDatabase): CovidAuDao {
+        return covidDatabase.covidAuDao()
     }
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): NbaDatabase {
+    fun provideAppDatabase(@ApplicationContext appContext: Context): CovidDatabase {
         return Room.databaseBuilder(
             appContext,
-            NbaDatabase::class.java,
-            "nba_database"
+            CovidDatabase::class.java,
+            "covid_database"
         ).build()
     }
 }

@@ -1,14 +1,14 @@
 package com.bhw.covid_suburb_au.view.theme
 
 import androidx.compose.runtime.Composable
-import com.bhw.covid_suburb_au.datasource.room.TeamThemeEntity
+import com.bhw.covid_suburb_au.datasource.room.CovidAuEntity
 
 @Composable
 fun NbaTeamTheme(
-    teamTheme: TeamThemeEntity?,
+    covidAu: CovidAuEntity?,
     content: @Composable () -> Unit
 ) {
-    teamTheme?.run {
+    covidAu?.run {
         NbaTheme(
             colors = NBALightColors,
             content = content

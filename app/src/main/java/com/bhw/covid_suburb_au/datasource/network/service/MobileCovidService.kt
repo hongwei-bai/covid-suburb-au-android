@@ -12,5 +12,4 @@ interface MobileCovidService {
         @Query("tops") tops: Int,
         @Query("followedSuburbs") followedSuburbs: List<Long>
     ): Response<Any>
-
 }

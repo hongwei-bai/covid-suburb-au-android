@@ -84,4 +84,7 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+#room schemes
+app/schemas/
+
 .DS_Store

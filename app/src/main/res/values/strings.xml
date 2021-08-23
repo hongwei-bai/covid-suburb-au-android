@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Covid AU Suburbs</string>
+    <string name="splash_loading_text">Loading&#8230;</string>
 </resources>

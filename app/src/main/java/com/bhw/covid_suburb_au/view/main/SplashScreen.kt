@@ -1,12 +1,16 @@
 package com.bhw.covid_suburb_au.view.main
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,7 +32,7 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_timer))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_compass))
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -39,12 +43,12 @@ fun SplashScreen(navController: NavController) {
         ) {
             LottieAnimation(
                 composition,
-                speed = 1.4f,
-                iterations = LottieConstants.IterateForever
+                speed = 1.0f,
+                iterations = LottieConstants.IterateForever,
+                modifier = Modifier.requiredSizeIn(maxWidth = 320.dp, maxHeight = 320.dp)
             )
-            Spacer(modifier = Modifier.size(2.dp))
             Text(
-                text = "Loading",//stringResource(id = R.string.splash_loading_text),
+                text = stringResource(id = R.string.splash_loading_text),
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.h5
             )

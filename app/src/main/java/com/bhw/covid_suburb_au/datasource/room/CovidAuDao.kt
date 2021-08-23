@@ -8,16 +8,16 @@ import com.bhw.covid_suburb_au.constant.AppConfigurations.Room.API_VERSION
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TeamThemeDao {
+interface CovidAuDao {
     @Query("SELECT * FROM team_theme WHERE apiVersion=$API_VERSION")
-    fun getTeamTheme(): Flow<TeamThemeEntity?>
+    fun getTeamTheme(): Flow<CovidAuEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(teamThemeEntity: TeamThemeEntity)
+    suspend fun save(covidAuEntity: CovidAuEntity)
 
     @Query("DELETE FROM team_theme")
     suspend fun clear()
 
     @Query("SELECT * FROM team_theme")
-    fun getAllRecords(): List<TeamThemeEntity>
+    fun getAllRecords(): List<CovidAuEntity>
 }
