@@ -10,12 +10,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.bhw.covid_suburb_au.view.dashboard.Dashboard
-import com.bhw.covid_suburb_au.view.indev.Goal
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.bhw.covid_suburb_au.view.navigation.BottomNavBar
-import com.bhw.covid_suburb_au.view.season.Season
-import com.bhw.covid_suburb_au.view.settings.Settings
 
 
 @Composable
@@ -36,14 +33,14 @@ fun MainNavCompose(navController: NavHostController) {
         composable("dashboard") {
             Dashboard()
         }
-        composable("season") {
-            Season()
-        }
-        composable("goal") {
-            Goal()
-        }
-        composable("settings") {
-            Settings()
-        }
+//        composable("season") {
+//            Season()
+//        }
+//        composable("goal") {
+//            Goal()
+//        }
+//        composable("settings") {
+//            Settings()
+//        }
     }
 }

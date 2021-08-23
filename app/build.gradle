@@ -19,7 +19,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('..\\keystore\\appKeyNbaDebug.jks')
+            storeFile file('..\\keystore\\appKeyCovidAuDebug.jks')
             storePassword 'appKey'
             keyAlias 'appKey'
             keyPassword 'appKey'
@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.bhw.covid_suburb_au_android"
+        applicationId "com.bhw.covid_suburb_au"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1

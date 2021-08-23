@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -29,7 +28,7 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_splash))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_timer))
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -40,12 +39,12 @@ fun SplashScreen(navController: NavController) {
         ) {
             LottieAnimation(
                 composition,
-                speed = 1.2f,
-                iterations = LottieConstants.IterateForever,
+                speed = 1.4f,
+                iterations = LottieConstants.IterateForever
             )
             Spacer(modifier = Modifier.size(2.dp))
             Text(
-                text = stringResource(id = R.string.splash_loading_text),
+                text = "Loading",//stringResource(id = R.string.splash_loading_text),
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.h5
             )

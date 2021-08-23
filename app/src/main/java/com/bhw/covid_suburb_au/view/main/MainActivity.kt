@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.bhw.covid_suburb_au.repository.NbaTeamRepository
+import com.bhw.covid_suburb_au.repository.MobileCovidRepository
 import com.bhw.covid_suburb_au.view.theme.NbaTeamTheme
 import com.bhw.covid_suburb_au.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,19 +23,19 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var nbaTeamRepository: NbaTeamRepository
+    lateinit var mobileCovidRepository: MobileCovidRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val viewModel = hiltNavGraphViewModel<MainViewModel>()
+            val viewModel = hiltViewModel<MainViewModel>()
 
-            NbaTeamTheme(viewModel.teamTheme.observeAsState().value) {
+//            NbaTeamTheme(viewModel.teamTheme.observeAsState().value) {
                 SystemUiController()
 
                 NavComposeApp()
-            }
+//            }
         }
     }
 }

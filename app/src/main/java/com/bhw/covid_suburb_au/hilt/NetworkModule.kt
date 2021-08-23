@@ -6,7 +6,7 @@ import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_CONNECT_T
 import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_READ_TIMEOUT
 import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_WRITE_TIMEOUT
 import com.bhw.covid_suburb_au.datasource.network.interceptor.PublicAccessInterceptor
-import com.bhw.covid_suburb_au.datasource.network.service.NbaThemeService
+import com.bhw.covid_suburb_au.datasource.network.service.MobileCovidService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -48,12 +48,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNbaThemeService(okHttpClient: OkHttpClient, moshi: Moshi): NbaThemeService {
+    fun provideMobileCovidService(okHttpClient: OkHttpClient, moshi: Moshi): MobileCovidService {
         return Retrofit.Builder()
-            .baseUrl(AppConfigurations.Network.NBA_THEME_ENDPOINT)
+            .baseUrl(AppConfigurations.Network.MOBILE_COVID_ENDPOINT)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
-            .create(NbaThemeService::class.java)
+            .create(MobileCovidService::class.java)
     }
 }

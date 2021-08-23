@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "693847439624",
-    "project_id": "nba-assist",
-    "storage_bucket": "nba-assist.appspot.com"
+    "project_number": "99104205171",
+    "project_id": "stellar-verve-275206",
+    "storage_bucket": "stellar-verve-275206.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:693847439624:android:92a22929cb0f0e810814bd",
+        "mobilesdk_app_id": "1:99104205171:android:3c2e9ba172b6dc1bebbd06",
         "android_client_info": {
-          "package_name": "com.hongwei.android_nba_assist"
+          "package_name": "com.bhw.covid_suburb_au"
         }
       },
       "oauth_client": [
         {
-          "client_id": "693847439624-986qjlsdp27cac382laee53stef9173o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hongwei.android_nba_assist",
-            "certificate_hash": "d852d50c5cb44900e372d45b3a742239e77e33e2"
-          }
-        },
-        {
-          "client_id": "693847439624-lgs67i5hgl5humslds79s0uk3l9oun5t.apps.googleusercontent.com",
+          "client_id": "99104205171-cik16kf2s2ipptighd5uask5fdkos8le.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCuqWzyhiCfhVkraFUKJWGoCD7FT25WQL8"
+          "current_key": "AIzaSyA47ACppSYZrHTfmvIpI2_ggnYC2fPww28"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "693847439624-lgs67i5hgl5humslds79s0uk3l9oun5t.apps.googleusercontent.com",
+              "client_id": "99104205171-cik16kf2s2ipptighd5uask5fdkos8le.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

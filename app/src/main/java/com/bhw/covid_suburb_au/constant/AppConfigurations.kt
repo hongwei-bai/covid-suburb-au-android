@@ -10,6 +10,8 @@ object AppConfigurations {
         const val AUTHORIZATION_HEADER = "Authorization"
         const val AUTHORIZATION_BEARER = "Bearer"
 
+        const val MOBILE_COVID_ENDPOINT = "$SERVICE_DOMAIN/covid/au/"
+
         object HttpCode {
             const val HTTP_OK = 200
             const val HTTP_DATA_UP_TO_DATE = 205
