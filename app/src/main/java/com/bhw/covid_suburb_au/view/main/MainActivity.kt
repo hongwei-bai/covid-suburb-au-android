@@ -1,17 +1,11 @@
 package com.bhw.covid_suburb_au.view.main
 
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -49,15 +43,14 @@ fun SystemUiController() {
         // Update all of the system bar colors to be transparent, and use
         // dark icons if we're in light theme
         systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = true
+            color = systemBarColor,
+            darkIcons = useDarkIcons
         )
 
         // setStatusBarsColor() and setNavigationBarsColor() also exist
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavComposeApp() {
     val navController = rememberNavController()

@@ -17,4 +17,16 @@ object CovidTypeConverters {
         val gson = Gson()
         return gson.toJson(list)
     }
+
+    @TypeConverter
+    fun fromStringToSuburbList(value: String?): List<AuSuburbEntity>? {
+        val listType: Type = object : TypeToken<List<AuSuburbEntity>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromSuburbList(list: List<AuSuburbEntity>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
 }

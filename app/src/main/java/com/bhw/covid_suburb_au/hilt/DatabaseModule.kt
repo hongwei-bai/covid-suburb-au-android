@@ -2,6 +2,7 @@ package com.bhw.covid_suburb_au.hilt
 
 import android.content.Context
 import androidx.room.Room
+import com.bhw.covid_suburb_au.datasource.room.AuPostcodeDao
 import com.bhw.covid_suburb_au.datasource.room.CovidDatabase
 import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
 import dagger.Module
@@ -17,6 +18,11 @@ class DatabaseModule {
     @Provides
     fun provideMobileCovidAuRawDao(covidDatabase: CovidDatabase): CovidAuDao {
         return covidDatabase.covidAuDao()
+    }
+
+    @Provides
+    fun provideAuPostcodeDao(covidDatabase: CovidDatabase): AuPostcodeDao {
+        return covidDatabase.auPostcodeDao()
     }
 
     @Provides

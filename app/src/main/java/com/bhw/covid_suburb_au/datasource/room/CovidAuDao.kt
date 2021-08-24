@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CovidAuDao {
     @Query("SELECT * FROM covid_au_raw WHERE apiVersion=$API_VERSION")
-    fun getRawData(): Flow<CovidAuEntity?>
+    fun getRawDataFlow(): Flow<CovidAuEntity?>
+
+    @Query("SELECT * FROM covid_au_raw WHERE apiVersion=$API_VERSION")
+    suspend fun getRawData(): CovidAuEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(covidAuEntity: CovidAuEntity)

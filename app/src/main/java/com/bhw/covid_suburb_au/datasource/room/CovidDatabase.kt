@@ -4,8 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [CovidAuEntity::class], version = 1)
+@Database(entities = [CovidAuEntity::class, AuPostcodeEntity::class], version = 1)
 @TypeConverters(CovidTypeConverters::class)
 abstract class CovidDatabase : RoomDatabase() {
     abstract fun covidAuDao(): CovidAuDao
+
+    abstract fun auPostcodeDao(): AuPostcodeDao
 }

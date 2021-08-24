@@ -1,39 +1,29 @@
-package com.bhw.covid_suburb_au.view.navigation
+package com.bhw.covid_suburb_au.view.main
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.*
-import com.bhw.covid_suburb_au.view.main.Screen
+import androidx.compose.runtime.rememberCoroutineScope
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
+import kotlinx.coroutines.launch
 
+@ExperimentalPagerApi
 @Composable
-fun BottomNavBar(navController: NavHostController) {
+fun BottomNavBar(pagerState: PagerState) {
     BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+        val coroutineScope = rememberCoroutineScope()
         val items = listOf(Screen.Dashboard, Screen.Map, Screen.Trends, Screen.Settings)
         items.forEach {
             BottomNavigationItem(
                 icon = { Icon(it.icon, "") },
-                selected = currentRoute == it.route,
+                selected = items.indexOf(it) == pagerState.currentPage,
                 label = { Text(text = it.label) },
                 onClick = {
-                    navController.popBackStack(
-                        navController.graph.startDestinationId, false
-                    )
-                    if (currentRoute != it.route) {
-                        if (it.route == "dashboard") {
-                            navController.navigate(it.route) {
-                                popUpTo("dashboard") { inclusive = true }
-                                launchSingleTop = true
-                            }
-                        } else {
-                            navController.navigate(it.route)
-                        }
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(items.indexOf(it))
                     }
                 }
             )
