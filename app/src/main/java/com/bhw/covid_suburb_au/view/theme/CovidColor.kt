@@ -18,6 +18,8 @@ val CovidLightColors = lightColors(
     onSecondary = CovidPrimary,
     background = CovidLight,
     onBackground = CovidPrimary,
+    surface = CovidLight,
+    onSurface = CovidPrimary,
     error = CovidLight,
     onError = Red900
 )
@@ -32,6 +34,8 @@ val CovidDarkColors = lightColors(
     onSecondary = CovidLight,
     background = CovidPrimary,
     onBackground = CovidLight,
+    surface = CovidPrimary,
+    onSurface = CovidLight,
     error = Red900,
     onError = CovidLight
 )

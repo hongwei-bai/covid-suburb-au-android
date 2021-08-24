@@ -1,12 +1,15 @@
 package com.bhw.covid_suburb_au.view.dashboard
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bhw.covid_suburb_au.view.component.DataStatusSnackBar
 import com.bhw.covid_suburb_au.view.component.LoadingContent
 import com.bhw.covid_suburb_au.viewmodel.DashboardViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -18,23 +21,22 @@ fun Dashboard() {
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
-        onRefresh = { viewModel.refresh() },
-        modifier = Modifier.fillMaxSize()
+        onRefresh = { viewModel.refresh() }
     ) {
         val data = viewModel.data.observeAsState().value
-
-        data?.run {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Text(text = "Data version: ${data.lastUpdate}")
-                Spacer(modifier = Modifier.size(40.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            DataStatusSnackBar(null, data?.lastUpdate)
+            data?.run {
                 TopSuburbsBoard(
-                    data = data.topSuburbs,
-                    modifier = Modifier
-                        .wrapContentHeight()
-                        .fillMaxWidth()
+                    data = data.topSuburbs
                 )
-            }
-        } ?: LoadingContent()
+            } ?: LoadingContent()
+        }
     }
 }
 
