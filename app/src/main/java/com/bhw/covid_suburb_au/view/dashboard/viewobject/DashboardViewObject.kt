@@ -10,7 +10,8 @@ data class DashboardViewObject(
 data class TopSuburbViewObject(
     val postcode: Long,
     val briefName: String,
-    val cases: Int
+    val cases: Int,
+    val isFollowed: Boolean
 )
 
 data class FollowedSuburbViewObject(
