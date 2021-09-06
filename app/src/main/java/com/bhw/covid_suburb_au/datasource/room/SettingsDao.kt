@@ -13,7 +13,7 @@ interface SettingsDao {
     suspend fun getSettings(): SettingsEntity?
 
     @Query("SELECT * FROM settings WHERE apiVersion=${API_VERSION}")
-    suspend fun getSettingsFlow(): Flow<SettingsEntity>
+    fun getSettingsFlow(): Flow<SettingsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: SettingsEntity)

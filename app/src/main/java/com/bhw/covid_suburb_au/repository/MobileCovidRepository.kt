@@ -18,8 +18,8 @@ class MobileCovidRepository @Inject constructor(
 ) {
     suspend fun fetchMobileCovidRawData() {
         val rawDataDb = covidAuDao.getRawData()
-        val lastUpdateIsToday = LocalDateTimeUtil.isToday(rawDataDb?.lastUpdate)
-        if (!lastUpdateIsToday) {
+        val lastUpdateDaysDiff = LocalDateTimeUtil.getDayDiffFromToday(rawDataDb?.lastUpdate) ?: Long.MAX_VALUE
+        if (lastUpdateDaysDiff > 1) {
             fetchMobileCovidRawDataFromBackend(rawDataDb?.dataVersion ?: -1)
         }
     }

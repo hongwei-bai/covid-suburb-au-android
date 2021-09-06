@@ -16,7 +16,7 @@ object LocalDateTimeUtil {
                     calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
         } ?: false
 
-    fun getDayDiffFromToday(dateString: String): Long? =
+    fun getDayDiffFromToday(dateString: String?): Long? =
         parseDate(dateString)?.let { date ->
             val calendar = Calendar.getInstance().apply {
                 time = date

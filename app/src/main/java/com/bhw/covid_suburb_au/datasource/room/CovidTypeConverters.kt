@@ -29,4 +29,28 @@ object CovidTypeConverters {
         val gson = Gson()
         return gson.toJson(list)
     }
+
+    @TypeConverter
+    fun fromStringToLongList(value: String?): List<Long>? {
+        val listType: Type = object : TypeToken<List<Long>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromLongList(list: List<Long>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromStringToSettingsEntity(value: String?): SettingsEntity? {
+        val type: Type = object : TypeToken<SettingsEntity?>() {}.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromSettingsEntity(entity: SettingsEntity?): String? {
+        val gson = Gson()
+        return gson.toJson(entity)
+    }
 }

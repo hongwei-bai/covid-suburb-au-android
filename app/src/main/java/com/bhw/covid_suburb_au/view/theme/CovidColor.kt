@@ -7,15 +7,16 @@ import androidx.compose.ui.graphics.Color
 val CovidPrimary = Color(0XFF4b8d8d)
 val CovidLight = Color(0xFFF5F5F5)
 val CovidAccent = Color(0XFF8AC0C0)
+val CovidDark = Color(0XA0000000)
 
 @SuppressLint("ConflictingOnColor")
 val CovidLightColors = lightColors(
-    primary = CovidLight,
-    primaryVariant = CovidLight,
-    onPrimary = CovidPrimary,
+    primary = CovidPrimary,
+    primaryVariant = CovidPrimary,
+    onPrimary = CovidDark,
     secondary = CovidAccent,
     secondaryVariant = CovidAccent,
-    onSecondary = CovidPrimary,
+    onSecondary = CovidDark,
     background = CovidLight,
     onBackground = CovidPrimary,
     surface = CovidLight,

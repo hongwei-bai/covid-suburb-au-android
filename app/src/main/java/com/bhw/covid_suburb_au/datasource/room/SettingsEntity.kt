@@ -15,6 +15,9 @@ data class SettingsEntity(
     @SerializedName("my_postcode")
     var myPostcode: Long = 0L,
 
+    @SerializedName("my_suburb")
+    var mySuburb: String?,
+
     @SerializedName("my_state")
     var myState: String = "",
 

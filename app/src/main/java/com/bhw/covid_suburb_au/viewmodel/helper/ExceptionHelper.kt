@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 object ExceptionHelper  {
     var postHandler: (() -> Unit)? = null
 
-    val nbaExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    val covidExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("bbbb", "Exception caught: ${throwable.localizedMessage}")
         Log.e("bbbb", Log.getStackTraceString(throwable))
         postHandler?.invoke()

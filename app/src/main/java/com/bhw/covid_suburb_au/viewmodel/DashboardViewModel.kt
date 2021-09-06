@@ -8,7 +8,7 @@ import com.bhw.covid_suburb_au.repository.MobileCovidRepository
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.DashboardViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.FollowedSuburbViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.TopSuburbViewObject
-import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
+import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.covidExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
@@ -34,7 +34,7 @@ class DashboardViewModel @Inject constructor(
 
     fun refresh() {
         isRefreshing.value = true
-        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
+        viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             mobileCovidRepository.forceFetchMobileCovidRawData()
             isRefreshing.postValue(false)
         }

@@ -16,6 +16,14 @@ class AuPostcodeRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val auPostcodeDao: AuPostcodeDao
 ) {
+    suspend fun getPostcodeBriefByPrefix(postcodePrefix: Long, limit: Int): List<AuPostcodeEntity> =
+        when (postcodePrefix) {
+            in 0..9 -> auPostcodeDao.findPostcodesInRange(postcodePrefix * 1000, postcodePrefix * 1000 + limit)
+            in 10..99 -> auPostcodeDao.findPostcodesInRange(postcodePrefix * 100, postcodePrefix * 100 + limit)
+            in 100..999 -> auPostcodeDao.findPostcodesInRange(postcodePrefix * 10, postcodePrefix * 10 + limit)
+            else -> emptyList()
+        }.filterIndexed { i, _ -> i < limit }
+
     suspend fun getPostcode(postcode: Long): AuPostcodeEntity? =
         auPostcodeDao.findPostcode(postcode)
 

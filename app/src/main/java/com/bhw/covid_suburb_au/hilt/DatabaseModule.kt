@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.bhw.covid_suburb_au.datasource.room.AuPostcodeDao
 import com.bhw.covid_suburb_au.datasource.room.CovidDatabase
 import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
+import com.bhw.covid_suburb_au.datasource.room.SettingsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +24,11 @@ class DatabaseModule {
     @Provides
     fun provideAuPostcodeDao(covidDatabase: CovidDatabase): AuPostcodeDao {
         return covidDatabase.auPostcodeDao()
+    }
+
+    @Provides
+    fun provideSettingsDao(covidDatabase: CovidDatabase): SettingsDao {
+        return covidDatabase.settingsDao()
     }
 
     @Provides

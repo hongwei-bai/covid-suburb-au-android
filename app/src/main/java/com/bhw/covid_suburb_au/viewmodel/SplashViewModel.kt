@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bhw.covid_suburb_au.repository.AuPostcodeRepository
 import com.bhw.covid_suburb_au.repository.MobileCovidRepository
-import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.nbaExceptionHandler
+import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.covidExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,12 +20,12 @@ class SplashViewModel @Inject constructor(
     fun preload(onPreloadComplete: () -> Unit) {
         if (!onStart) return
         onStart = false
-        viewModelScope.launch(Dispatchers.IO + nbaExceptionHandler) {
+        viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             if (!auPostcodeRepository.checkNeedInitialization()) {
                 auPostcodeRepository.initialize()
             }
             mobileCovidRepository.fetchMobileCovidRawData()
-            viewModelScope.launch(Dispatchers.Main + nbaExceptionHandler) {
+            viewModelScope.launch(Dispatchers.Main + covidExceptionHandler) {
                 onPreloadComplete.invoke()
             }
         }
