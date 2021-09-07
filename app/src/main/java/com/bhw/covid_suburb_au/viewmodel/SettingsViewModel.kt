@@ -18,6 +18,26 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    val myPostcode: LiveData<Long?> =
+        settingsRepository.getPersonalSettings().map {
+            it.myPostcode
+        }.asLiveData(Dispatchers.IO + covidExceptionHandler)
+
+    val followedSuburbs: LiveData<List<Pair<Long, String>>?> =
+        settingsRepository.getPersonalSettings().map {
+            it.followedPostcodes.mapNotNull { postcode ->
+                auPostcodeRepository.getPostcode(postcode)?.suburbs
+                    ?.map { entity ->
+                        entity.suburb
+                    }?.let { suburbs ->
+                        AuSuburbHelper.getSuburbBrief(suburbs)?.let { briefName ->
+                            Pair(postcode, briefName)
+                        }
+
+                    }
+            }
+        }.asLiveData(Dispatchers.IO + covidExceptionHandler)
+
     val suburb: LiveData<String?> =
         settingsRepository.getPersonalSettings().map {
             "${it.myPostcode} ${it.mySuburb}"

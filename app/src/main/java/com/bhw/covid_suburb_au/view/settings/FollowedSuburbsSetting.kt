@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -25,67 +24,66 @@ import com.bhw.covid_suburb_au.viewmodel.SettingsViewModel
 fun FollowedSuburbsSetting() {
     val viewModel = hiltViewModel<SettingsViewModel>()
 
-    val mySuburb = viewModel.suburb.observeAsState().value
+    val followedSuburbs = viewModel.followedSuburbs.observeAsState().value
     val displaySuburbPickerDialog = remember { mutableStateOf(false) }
     val displayConfirmUpdateSuburbDialog = remember { mutableStateOf(false) }
 
     val newSuburb: MutableState<String?> = remember { mutableStateOf(null) }
 
-    Text(
-        text = stringResource(R.string.followed_suburbs),
-        style = MaterialTheme.typography.h6
-    )
+    val isNotEmpty = followedSuburbs?.isNullOrEmpty() == false
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        mySuburb?.let {
-            Text(text = mySuburb)
-        } ?: Text(text = stringResource(R.string.configure_your_suburb))
+        Text(
+            text = stringResource(R.string.followed_suburbs),
+            style = MaterialTheme.typography.h6
+        )
         TextButton(
-            onClick = { displaySuburbPickerDialog.value = true }
+            onClick = { }
         ) {
             Text(
-                text = stringResource(id = R.string.change),
+                text = stringResource(id = R.string.add),
                 style = MaterialTheme.typography.overline,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier.wrapContentWidth()
             )
         }
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        if (isNotEmpty) {
+            followedSuburbs?.forEach { (postcode, briefName) ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "$postcode $briefName")
+                    TextButton(
+                        onClick = { }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.delete),
+                            style = MaterialTheme.typography.overline,
+                            textDecoration = TextDecoration.Underline,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                    }
+                }
+            }
+        } else {
+            Text(text = stringResource(R.string.configure_your_followed_suburbs))
+        }
+
         if (displaySuburbPickerDialog.value) {
             SuburbPickerDialog {
                 displaySuburbPickerDialog.value = false
                 newSuburb.value = it
-                mySuburb?.let {
-                    displayConfirmUpdateSuburbDialog.value = true
-                } ?: newSuburb.value?.let { newSuburbValue ->
-                    viewModel.setMySuburb(newSuburbValue)
-                }
-            }
-        }
-        if (displayConfirmUpdateSuburbDialog.value) {
-            mySuburb?.let {
-                newSuburb.value?.let { newSuburbValue ->
-                    AlertDialog(
-                        onDismissRequest = { displayConfirmUpdateSuburbDialog.value = false },
-                        title = { Text(text = stringResource(id = R.string.replace_suburb_title)) },
-                        text = { Text(text = stringResource(id = R.string.replace_suburb_message, mySuburb, newSuburbValue)) },
-                        confirmButton = {
-                            TextButton(onClick = {
-                                viewModel.setMySuburb(newSuburbValue)
-                                displayConfirmUpdateSuburbDialog.value = false
-                            }) {
-                                Text(text = stringResource(id = R.string.update))
-                            }
-                        },
-                        dismissButton = {
-                            TextButton(onClick = { displayConfirmUpdateSuburbDialog.value = false }) {
-                                Text(text = stringResource(id = R.string.cancel))
-                            }
-                        }
-                    )
-                }
             }
         }
     }

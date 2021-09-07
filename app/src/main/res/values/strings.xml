@@ -22,4 +22,8 @@
     <string name="cancel">Cancel</string>
 
     <string name="followed_suburbs">Followed suburbs:</string>
+    <string name="configure_your_followed_suburbs">You haven\'t configured followed suburbs.</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="add_now">Add now</string>
 </resources>
