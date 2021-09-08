@@ -22,12 +22,12 @@ import com.bhw.covid_suburb_au.R
 import com.bhw.covid_suburb_au.viewmodel.SettingsViewModel
 
 @Composable
-fun CurrentSuburbSetting() {
+fun SuburbSetting() {
     val viewModel = hiltViewModel<SettingsViewModel>()
 
     val mySuburb = viewModel.suburb.observeAsState().value
-    val displaySuburbPickerDialog = remember { mutableStateOf(false) }
-    val displayConfirmUpdateSuburbDialog = remember { mutableStateOf(false) }
+    val displayPickerDialog = remember { mutableStateOf(false) }
+    val displayConfirmationDialog = remember { mutableStateOf(false) }
 
     val newSuburb: MutableState<String?> = remember { mutableStateOf(null) }
 
@@ -44,7 +44,7 @@ fun CurrentSuburbSetting() {
             Text(text = mySuburb)
         } ?: Text(text = stringResource(R.string.configure_your_suburb))
         TextButton(
-            onClick = { displaySuburbPickerDialog.value = true }
+            onClick = { displayPickerDialog.value = true }
         ) {
             Text(
                 text = stringResource(id = R.string.change),
@@ -53,34 +53,34 @@ fun CurrentSuburbSetting() {
                 modifier = Modifier.wrapContentWidth()
             )
         }
-        if (displaySuburbPickerDialog.value) {
+        if (displayPickerDialog.value) {
             SuburbPickerDialog {
-                displaySuburbPickerDialog.value = false
+                displayPickerDialog.value = false
                 newSuburb.value = it
                 mySuburb?.let {
-                    displayConfirmUpdateSuburbDialog.value = true
+                    displayConfirmationDialog.value = true
                 } ?: newSuburb.value?.let { newSuburbValue ->
                     viewModel.setMySuburb(newSuburbValue)
                 }
             }
         }
-        if (displayConfirmUpdateSuburbDialog.value) {
+        if (displayConfirmationDialog.value) {
             mySuburb?.let {
                 newSuburb.value?.let { newSuburbValue ->
                     AlertDialog(
-                        onDismissRequest = { displayConfirmUpdateSuburbDialog.value = false },
+                        onDismissRequest = { displayConfirmationDialog.value = false },
                         title = { Text(text = stringResource(id = R.string.replace_suburb_title)) },
                         text = { Text(text = stringResource(id = R.string.replace_suburb_message, mySuburb, newSuburbValue)) },
                         confirmButton = {
                             TextButton(onClick = {
                                 viewModel.setMySuburb(newSuburbValue)
-                                displayConfirmUpdateSuburbDialog.value = false
+                                displayConfirmationDialog.value = false
                             }) {
                                 Text(text = stringResource(id = R.string.update))
                             }
                         },
                         dismissButton = {
-                            TextButton(onClick = { displayConfirmUpdateSuburbDialog.value = false }) {
+                            TextButton(onClick = { displayConfirmationDialog.value = false }) {
                                 Text(text = stringResource(id = R.string.cancel))
                             }
                         }

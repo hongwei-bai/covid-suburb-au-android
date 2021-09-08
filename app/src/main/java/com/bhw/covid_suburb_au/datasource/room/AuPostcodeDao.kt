@@ -1,9 +1,12 @@
 package com.bhw.covid_suburb_au.datasource.room
 
+import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AuPostcodeDao {
@@ -20,5 +23,11 @@ interface AuPostcodeDao {
     suspend fun saveAll(list: List<AuPostcodeEntity>)
 
     @Query("SELECT * FROM au_postcode")
-    suspend fun findAllPostcodes(): List<AuPostcodeEntity>
+    suspend fun getAllPostcodes(): List<AuPostcodeEntity>
+
+    @Query("SELECT * FROM au_postcode")
+    fun getPostcodesPagingSource(): PagingSource<Int, AuPostcodeEntity>
+
+    @Query("SELECT * FROM au_postcode")
+    fun findAllPostcodesFlow(): Flow<List<AuPostcodeEntity>>
 }

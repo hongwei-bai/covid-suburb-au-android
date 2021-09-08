@@ -47,7 +47,7 @@ fun Settings() {
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.size(16.dp))
-            CurrentSuburbSetting()
+            SuburbSetting()
             Spacer(modifier = Modifier.size(16.dp))
             FollowedSuburbsSetting()
         }

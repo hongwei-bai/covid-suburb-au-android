@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhw.covid_suburb_au.R
+import com.bhw.covid_suburb_au.datasource.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.viewmodel.SettingsViewModel
 
 @Composable
@@ -25,10 +25,7 @@ fun FollowedSuburbsSetting() {
     val viewModel = hiltViewModel<SettingsViewModel>()
 
     val followedSuburbs = viewModel.followedSuburbs.observeAsState().value
-    val displaySuburbPickerDialog = remember { mutableStateOf(false) }
-    val displayConfirmUpdateSuburbDialog = remember { mutableStateOf(false) }
-
-    val newSuburb: MutableState<String?> = remember { mutableStateOf(null) }
+    val displayPickerDialog = remember { mutableStateOf(false) }
 
     val isNotEmpty = followedSuburbs?.isNullOrEmpty() == false
 
@@ -42,7 +39,7 @@ fun FollowedSuburbsSetting() {
             style = MaterialTheme.typography.h6
         )
         TextButton(
-            onClick = { }
+            onClick = { displayPickerDialog.value = true }
         ) {
             Text(
                 text = stringResource(id = R.string.add),
@@ -63,7 +60,7 @@ fun FollowedSuburbsSetting() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "$postcode $briefName")
+                    Text(text = AuSuburbHelper.toDisplayString(postcode, briefName))
                     TextButton(
                         onClick = { }
                     ) {
@@ -79,11 +76,9 @@ fun FollowedSuburbsSetting() {
         } else {
             Text(text = stringResource(R.string.configure_your_followed_suburbs))
         }
-
-        if (displaySuburbPickerDialog.value) {
-            SuburbPickerDialog {
-                displaySuburbPickerDialog.value = false
-                newSuburb.value = it
+        if (displayPickerDialog.value) {
+            FollowedSuburbsPickerDialog {
+                displayPickerDialog.value = false
             }
         }
     }
