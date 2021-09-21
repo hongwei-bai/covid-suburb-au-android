@@ -33,6 +33,7 @@ fun SuburbSetting() {
 
     Text(
         text = stringResource(R.string.current_suburb),
+        color = MaterialTheme.colors.onPrimary,
         style = MaterialTheme.typography.h6
     )
     Row(
@@ -41,7 +42,10 @@ fun SuburbSetting() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         mySuburb?.let {
-            Text(text = mySuburb)
+            Text(
+                text = mySuburb,
+                color = MaterialTheme.colors.onPrimary,
+            )
         } ?: Text(text = stringResource(R.string.configure_your_suburb))
         TextButton(
             onClick = { displayPickerDialog.value = true }
@@ -69,8 +73,8 @@ fun SuburbSetting() {
                 newSuburb.value?.let { newSuburbValue ->
                     AlertDialog(
                         onDismissRequest = { displayConfirmationDialog.value = false },
-                        title = { Text(text = stringResource(id = R.string.replace_suburb_title)) },
-                        text = { Text(text = stringResource(id = R.string.replace_suburb_message, mySuburb, newSuburbValue)) },
+                        title = { Text(text = stringResource(id = R.string.replace_suburb_confirmation_dialog_title)) },
+                        text = { Text(text = stringResource(id = R.string.replace_suburb_confirmation_dialog_message, mySuburb, newSuburbValue)) },
                         confirmButton = {
                             TextButton(onClick = {
                                 viewModel.setMySuburb(newSuburbValue)

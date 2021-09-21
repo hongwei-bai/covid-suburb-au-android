@@ -1,11 +1,13 @@
 package com.bhw.covid_suburb_au.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.*
 import com.bhw.covid_suburb_au.datasource.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.datasource.room.AuPostcodeEntity
 import com.bhw.covid_suburb_au.repository.AuPostcodeRepository
 import com.bhw.covid_suburb_au.repository.SettingsRepository
+import com.bhw.covid_suburb_au.view.settings.viewobject.SuburbMultipleSelectionListItem
 import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.covidExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,15 +21,25 @@ class SettingsViewModel @Inject constructor(
     private val auPostcodeRepository: AuPostcodeRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
+    init {
+        viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
+            settingsRepository.getPersonalSettings()?.run {
+                initialiseAdjacentSuburbs(myPostcode, followedPostcodes)
+            }
+        }
+    }
+
+    private var followedSuburbSearchKeyword: String = ""
+
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val myPostcode: LiveData<Long?> =
-        settingsRepository.getPersonalSettings().map {
+        settingsRepository.getPersonalSettingsFlow().map {
             it.myPostcode
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
     val followedSuburbs: LiveData<List<Pair<Long, String>>?> =
-        settingsRepository.getPersonalSettings().map {
+        settingsRepository.getPersonalSettingsFlow().map {
             it.followedPostcodes.mapNotNull { postcode ->
                 auPostcodeRepository.getPostcode(postcode)?.suburbs
                     ?.map { entity ->
@@ -41,10 +53,10 @@ class SettingsViewModel @Inject constructor(
             }
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
-//    val suburbs: MutableLiveData<List<Pair<Long, String>>?> = MutableLiveData(emptyList())
+    val adjacentSuburbs: MutableLiveData<List<SuburbMultipleSelectionListItem>> = MutableLiveData(emptyList())
 
     val suburb: LiveData<String?> =
-        settingsRepository.getPersonalSettings().map {
+        settingsRepository.getPersonalSettingsFlow().map {
             AuSuburbHelper.toDisplayString(it.myPostcode, it.mySuburb)
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
@@ -58,6 +70,39 @@ class SettingsViewModel @Inject constructor(
                 postcode = postcode,
                 suburb = suburb
             )
+
+            settingsRepository.getPersonalSettings()?.run {
+                if (followedPostcodes.contains(postcode)) {
+                    setFollowPostcode(postcode, false)
+                }
+
+                initialiseAdjacentSuburbs(postcode, followedPostcodes)
+            }
+        }
+    }
+
+    fun setFollowPostcode(postcode: Long, isFollow: Boolean) {
+        viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
+            settingsRepository.getPersonalSettings()?.run {
+                var isChanged = false
+                val newList: MutableList<Long> = mutableListOf()
+                newList.addAll(followedPostcodes)
+                if (followedPostcodes.contains(postcode)) {
+                    if (!isFollow) {
+                        newList.remove(postcode)
+                        isChanged = true
+                    }
+                } else {
+                    if (isFollow) {
+                        newList.add(postcode)
+                        isChanged = true
+                    }
+                }
+                if (isChanged) {
+                    settingsRepository.saveFollowedPostcodes(newList)
+                    updateFollowedSuburbsPickerInput(followedSuburbSearchKeyword)
+                }
+            }
         }
     }
 
@@ -68,44 +113,48 @@ class SettingsViewModel @Inject constructor(
             maxSize = 5000
         )
     ) {
-        auPostcodeRepository.getPostcodesPagingSource()
+        Log.d("bbbb", "page load start")
+        val r = auPostcodeRepository.getPostcodesPagingSource()
+        Log.d("bbbb", "page load completed: $r")
+        r
     }.flow.cachedIn(viewModelScope)
 
-    fun updateSuburbInput(postcode: String) {
+    fun updateFollowedSuburbsPickerInput(inputString: String) {
+        followedSuburbSearchKeyword = inputString
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
-            val r = auPostcodeRepository.getPostcodesPagingSource()
+            val myPostcode = settingsRepository.getPersonalSettings()?.myPostcode
+            val followed = settingsRepository.getPersonalSettings()?.followedPostcodes
+            val list = myPostcode?.let {
+                when {
+                    inputString.isEmpty() -> auPostcodeRepository.getPostcodes(myPostcode, POSTCODE_PICKER_LIST_RADIUS)
+                    inputString.toLongOrNull() != null -> getPostcodeEntityListByNumber(inputString)
+                    else -> emptyList()
+                }
+            }?.map { entity ->
+                SuburbMultipleSelectionListItem(
+                    postcode = entity.postcode,
+                    display = AuSuburbHelper.toDisplayString(entity.postcode, entity.suburbs) ?: "",
+                    isSelectable = entity.postcode != myPostcode,
+                    isSelected = followed?.contains(entity.postcode) == true
+                )
+            }
+            adjacentSuburbs.postValue(list)
         }
     }
 
-    fun updatePostcodeInput(input: String) {
+    fun updateMySuburbPickerInput(input: String) {
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
-            val number = input.trim().toLongOrNull()
-            val list = number?.let {
-                when {
-                    input.startsWith("00") -> null
-                    input.startsWith("0") -> when (number) {
-                        in 1..99 -> auPostcodeRepository.getPostcodeBriefByPrefix0xxx(number, 10)
-                            .mapNotNull { AuSuburbHelper.toDisplayString(it.postcode, it.suburbs) }
-                        in 100..999 -> auPostcodeRepository.getPostcode(number)?.let { postcodeEntity ->
-                            postcodeEntity.suburbs.map {
-                                AuSuburbHelper.toDisplayString(postcodeEntity.postcode, it.suburb)
-                            }
-                        }
-                        else -> null
+            val entities = getPostcodeEntityListByNumber(input)
+            val list: List<String> = if (isAccurateMatch(input)) {
+                entities.firstOrNull()?.let { postcodeEntity ->
+                    postcodeEntity.suburbs.map {
+                        AuSuburbHelper.toDisplayString(postcodeEntity.postcode, it.suburb)
                     }
-                    else -> when (number) {
-                        in 0..999 -> auPostcodeRepository.getPostcodeBriefByPrefix(number, 10)
-                            .mapNotNull { AuSuburbHelper.toDisplayString(it.postcode, it.suburbs) }
-                        in 1000..9999 -> auPostcodeRepository.getPostcode(number)?.let { postcodeEntity ->
-                            postcodeEntity.suburbs.map {
-                                AuSuburbHelper.toDisplayString(postcodeEntity.postcode, it.suburb)
-                            }
-                        }
-                        else -> null
-                    }
-                }
+                } ?: emptyList()
+            } else {
+                entities.mapNotNull { AuSuburbHelper.toDisplayString(it.postcode, it.suburbs) }
             }
-            suburbSuggestions.postValue(list ?: emptyList())
+            suburbSuggestions.postValue(list)
         }
     }
 
@@ -115,5 +164,52 @@ class SettingsViewModel @Inject constructor(
             // Do anything...
             isRefreshing.postValue(false)
         }
+    }
+
+    private suspend fun initialiseAdjacentSuburbs(myPostcode: Long, followed: List<Long>) {
+        adjacentSuburbs.postValue(auPostcodeRepository.getPostcodes(myPostcode, POSTCODE_PICKER_LIST_RADIUS).map { entity ->
+            SuburbMultipleSelectionListItem(
+                postcode = entity.postcode,
+                display = AuSuburbHelper.toDisplayString(entity.postcode, entity.suburbs) ?: "",
+                isSelectable = entity.postcode != myPostcode,
+                isSelected = followed.contains(entity.postcode)
+            )
+        })
+    }
+
+    private suspend fun getPostcodeEntityListByNumber(rawString: String, number: Long? = rawString.toLongOrNull()): List<AuPostcodeEntity> =
+        number?.let {
+            when {
+                rawString.startsWith("00") -> emptyList()
+                rawString.startsWith("0") -> when (number) {
+                    in 1..99 -> auPostcodeRepository.getPostcodeBriefByPrefix0xxx(number, POSTCODE_PICKER_LIST_LENGTH)
+                    in 100..999 -> listOfNotNull(auPostcodeRepository.getPostcode(number))
+                    else -> emptyList()
+                }
+                else -> when (number) {
+                    in 0..999 -> auPostcodeRepository.getPostcodeBriefByPrefix(number, POSTCODE_PICKER_LIST_LENGTH)
+                    in 1000..9999 -> listOfNotNull(auPostcodeRepository.getPostcode(number))
+                    else -> emptyList()
+                }
+            }
+        } ?: emptyList()
+
+    private fun isAccurateMatch(rawString: String, number: Long? = rawString.toLongOrNull()): Boolean =
+        number?.let {
+            when {
+                rawString.startsWith("0") -> when (number) {
+                    in 100..999 -> true
+                    else -> false
+                }
+                else -> when (number) {
+                    in 1000..9999 -> true
+                    else -> false
+                }
+            }
+        } ?: false
+
+    companion object {
+        private const val POSTCODE_PICKER_LIST_LENGTH = 10
+        private const val POSTCODE_PICKER_LIST_RADIUS = POSTCODE_PICKER_LIST_LENGTH / 2
     }
 }

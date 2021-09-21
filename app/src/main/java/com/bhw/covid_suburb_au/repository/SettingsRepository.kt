@@ -16,8 +16,10 @@ class SettingsRepository @Inject constructor(
     private val settingsDao: SettingsDao,
     private val auPostcodeDao: AuPostcodeDao
 ) {
-    fun getPersonalSettings(): Flow<SettingsEntity> =
+    fun getPersonalSettingsFlow(): Flow<SettingsEntity> =
         settingsDao.getSettingsFlow()
+
+    suspend fun getPersonalSettings(): SettingsEntity? = settingsDao.getSettings()
 
     suspend fun getSuburbBriefByPostcode(postcode: Long): String? =
         auPostcodeDao.findPostcode(postcode)?.let { entity ->

@@ -40,6 +40,9 @@ class AuPostcodeRepository @Inject constructor(
 
     suspend fun getPostcodes(): List<AuPostcodeEntity> = auPostcodeDao.getAllPostcodes()
 
+    suspend fun getPostcodes(postcode: Long, radius: Int): List<AuPostcodeEntity> =
+        auPostcodeDao.findPostcodesInRange(postcode - radius, postcode + radius)
+
     fun getPostcodesPagingSource(): PagingSource<Int, AuPostcodeEntity> = auPostcodeDao.getPostcodesPagingSource()
 
     suspend fun checkNeedInitialization(): Boolean =

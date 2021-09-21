@@ -44,7 +44,7 @@ fun SuburbPickerDialog(onSuburbPicked: (String?) -> Unit) {
                     onValueChange = {
                         textTyping.value = it
                         expandedStatus.value = true
-                        viewModel.updatePostcodeInput(it)
+                        viewModel.updateMySuburbPickerInput(it)
                     },
                     label = { Text("My suburb") },
                     modifier = Modifier.clickable {

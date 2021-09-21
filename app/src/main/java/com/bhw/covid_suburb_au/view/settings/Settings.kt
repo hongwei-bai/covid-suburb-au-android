@@ -37,12 +37,14 @@ fun Settings() {
         ) {
             Text(
                 text = stringResource(id = R.string.covid),
+                color = MaterialTheme.colors.onPrimary,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
                 text = stringResource(id = R.string.settings),
                 style = MaterialTheme.typography.h5,
+                color = MaterialTheme.colors.onPrimary,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )

@@ -7,6 +7,12 @@
     <string name="snack_bar_data_up_to_date">Your data is up to date.</string>
     <string name="snack_bar_service_error">Oops! Something is wrong, please try again later.</string>
 
+    <string name="home_icon_content_description">This is the suburb you are living at.</string>
+    <string name="follow_icon_content_description">This is a suburb you are following.</string>
+    <string name="state_home_icon_content_description">This is the state you are living in.</string>
+    <string name="click_to_see_full_suburb_list">Click to see more</string>
+    <string name="click_to_show_compat_list">Click to show less</string>
+
     <string name="covid">COVID-19</string>
     <string name="settings">Settings</string>
 
@@ -16,10 +22,14 @@
     <string name="select_suburb">Please enter postcode to search:</string>
     <string name="configure_your_suburb">You haven\'t configure your suburb.</string>
 
-    <string name="replace_suburb_title">Alert</string>
-    <string name="replace_suburb_message">Are you sure you want to update your suburb from %1$s to %2$s?</string>
+    <string name="replace_suburb_confirmation_dialog_title">Alert</string>
+    <string name="replace_suburb_confirmation_dialog_message">Are you sure you want to update your suburb from %1$s to %2$s?</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
+
+    <string name="unfollow_suburb_confirmation_dialog_title">Warning</string>
+    <string name="unfollow_suburb_confirmation_dialog_message">Are you sure you want to unfollow %1$s?</string>
+    <string name="unfollow">Unfollow</string>
 
     <string name="followed_suburbs">Followed suburbs:</string>
     <string name="configure_your_followed_suburbs">You haven\'t configured followed suburbs.</string>
