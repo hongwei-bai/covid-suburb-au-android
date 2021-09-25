@@ -16,6 +16,8 @@ object AppConfigurations {
             const val HTTP_OK = 200
             const val HTTP_DATA_UP_TO_DATE = 205
         }
+
+        const val SPLASH_TIMEOUT = 1000L
     }
 
     object Room {

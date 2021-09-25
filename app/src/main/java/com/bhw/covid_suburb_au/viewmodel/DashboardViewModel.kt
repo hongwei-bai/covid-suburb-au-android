@@ -1,5 +1,6 @@
 package com.bhw.covid_suburb_au.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.bhw.covid_suburb_au.datasource.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.datasource.model.AuState
@@ -40,7 +41,7 @@ class DashboardViewModel @Inject constructor(
         settingsRepository.getPersonalSettingsFlow()
             .combine(mobileCovidRepository.getMobileCovidRawData()) { settings, data ->
                 data.dataByDay.firstOrNull()?.caseByState?.run {
-                    val myState = settings.myState
+                    val myState = settings?.myState
                     CasesByStateViewObject(
                         nsw = mapToStateViewObject("NSW", firstOrNull { it.stateCode == AuState.NSW.name }, myState),
                         vic = mapToStateViewObject("VIC", firstOrNull { it.stateCode == AuState.VIC.name }, myState),
@@ -58,13 +59,15 @@ class DashboardViewModel @Inject constructor(
         settingsRepository.getPersonalSettingsFlow()
             .combine(mobileCovidRepository.getMobileCovidRawData()) { settings, data ->
                 val fullList = getSuburbList(settings, data)
-                if (fullList.none { it.isMySuburb }) {
-                    fullList.addMySuburbToList(settings)
-                }
-                if (settings.followedPostcodes.size <= MAX_FOLLOWED_SUBURBS_TO_DISPLAY_0_CASE) {
-                    settings.followedPostcodes.forEach { postcode ->
-                        if (fullList.none { it.postcode == postcode }) {
-                            fullList.addFollowedSuburbToList(postcode)
+                settings?.let {
+                    if (fullList.none { it.isMySuburb }) {
+                        fullList.addMySuburbToList(settings)
+                    }
+                    if (settings.followedPostcodes.size <= MAX_FOLLOWED_SUBURBS_TO_DISPLAY_0_CASE) {
+                        settings.followedPostcodes.forEach { postcode ->
+                            if (fullList.none { it.postcode == postcode }) {
+                                fullList.addFollowedSuburbToList(postcode)
+                            }
                         }
                     }
                 }
@@ -79,12 +82,14 @@ class DashboardViewModel @Inject constructor(
         settingsRepository.getPersonalSettingsFlow()
             .combine(mobileCovidRepository.getMobileCovidRawData()) { settings, data ->
                 val fullList = getSuburbList(settings, data)
-                if (fullList.none { it.isMySuburb }) {
-                    fullList.addMySuburbToList(settings)
-                }
-                settings.followedPostcodes.forEach { postcode ->
-                    if (fullList.none { it.postcode == postcode }) {
-                        fullList.addFollowedSuburbToList(postcode)
+                settings?.let {
+                    if (fullList.none { it.isMySuburb }) {
+                        fullList.addMySuburbToList(settings)
+                    }
+                    settings.followedPostcodes.forEach { postcode ->
+                        if (fullList.none { it.postcode == postcode }) {
+                            fullList.addFollowedSuburbToList(postcode)
+                        }
                     }
                 }
                 CaseBySuburbViewObject(fullList)
@@ -107,11 +112,11 @@ class DashboardViewModel @Inject constructor(
             isHighlighted = entity?.cases ?: 0 >= STATE_HIGHLIGHT_THRESHOLD
         )
 
-    private suspend fun getSuburbList(settings: SettingsEntity, data: CovidAuEntity): MutableList<SuburbItemViewObject> =
+    private suspend fun getSuburbList(settings: SettingsEntity?, data: CovidAuEntity): MutableList<SuburbItemViewObject> =
         data.dataByDay.first().caseByPostcode.mapNotNull { postcodeRawData ->
             val postcodeInfo = auPostcodeRepository.getPostcode(postcodeRawData.postcode)
-            val myPostcode = settings.myPostcode
-            val followedPostcodes = settings.followedPostcodes
+            val myPostcode = settings?.myPostcode
+            val followedPostcodes = settings?.followedPostcodes
             postcodeInfo?.let { entity ->
                 SuburbItemViewObject(
                     rank = data.dataByDay.first().caseByPostcode.indexOf(postcodeRawData),
@@ -126,7 +131,7 @@ class DashboardViewModel @Inject constructor(
                     cases = postcodeRawData.cases,
                     isHighlighted = postcodeRawData.cases >= SUBURB_HIGHLIGHT_THRESHOLD,
                     isMySuburb = myPostcode == entity.postcode,
-                    isFollowed = followedPostcodes.contains(entity.postcode)
+                    isFollowed = followedPostcodes?.contains(entity.postcode) ?: false
                 )
             }
         }.toMutableList()

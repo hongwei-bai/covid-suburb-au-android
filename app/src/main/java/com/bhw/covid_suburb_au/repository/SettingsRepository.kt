@@ -16,7 +16,7 @@ class SettingsRepository @Inject constructor(
     private val settingsDao: SettingsDao,
     private val auPostcodeDao: AuPostcodeDao
 ) {
-    fun getPersonalSettingsFlow(): Flow<SettingsEntity> =
+    fun getPersonalSettingsFlow(): Flow<SettingsEntity?> =
         settingsDao.getSettingsFlow()
 
     suspend fun getPersonalSettings(): SettingsEntity? = settingsDao.getSettings()

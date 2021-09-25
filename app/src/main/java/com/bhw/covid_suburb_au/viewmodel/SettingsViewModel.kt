@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,13 +35,13 @@ class SettingsViewModel @Inject constructor(
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val myPostcode: LiveData<Long?> =
-        settingsRepository.getPersonalSettingsFlow().map {
-            it.myPostcode
+        settingsRepository.getPersonalSettingsFlow().mapNotNull {
+            it?.myPostcode
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
     val followedSuburbs: LiveData<List<Pair<Long, String>>?> =
         settingsRepository.getPersonalSettingsFlow().map {
-            it.followedPostcodes.mapNotNull { postcode ->
+            it?.followedPostcodes?.mapNotNull { postcode ->
                 auPostcodeRepository.getPostcode(postcode)?.suburbs
                     ?.map { entity ->
                         entity.suburb
@@ -56,8 +57,10 @@ class SettingsViewModel @Inject constructor(
     val adjacentSuburbs: MutableLiveData<List<SuburbMultipleSelectionListItem>> = MutableLiveData(emptyList())
 
     val suburb: LiveData<String?> =
-        settingsRepository.getPersonalSettingsFlow().map {
-            AuSuburbHelper.toDisplayString(it.myPostcode, it.mySuburb)
+        settingsRepository.getPersonalSettingsFlow().mapNotNull { settings ->
+            settings?.run {
+                AuSuburbHelper.toDisplayString(myPostcode, mySuburb)
+            }
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
     val suburbSuggestions: MutableLiveData<List<String>?> = MutableLiveData(null)

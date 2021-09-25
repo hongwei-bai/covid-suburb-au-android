@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,7 +46,7 @@ fun SplashScreen(navController: NavController) {
                 composition,
                 speed = 1.0f,
                 iterations = LottieConstants.IterateForever,
-                modifier = Modifier.requiredSizeIn(maxWidth = 320.dp, maxHeight = 320.dp)
+                modifier = Modifier.requiredSizeIn(maxWidth = 240.dp, maxHeight = 240.dp).scale(0.75f)
             )
             Text(
                 text = stringResource(id = R.string.splash_loading_text),
