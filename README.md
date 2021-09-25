@@ -1,5 +1,7 @@
 # covid-suburb-australia
 
+[![Build Status](https://hongwei-test1.top:8444/buildStatus/icon?job=covid-app-android)](https://hongwei-test1.top:8444/job/covid-app-android/)
+
 The app is aiming to help people in Australia keeping safe from COVID-19.
 
 By choosing your currently living suburb and following your most visit suburbs, you may closely being kept updated about new cases every day in these suburbs.
