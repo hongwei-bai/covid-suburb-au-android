@@ -1,4 +1,4 @@
-package com.bhw.covid_suburb_au.viewmodel.helper
+package com.bhw.covid_suburb_au.exception
 
 import android.util.Log
 import kotlinx.coroutines.CoroutineExceptionHandler

@@ -6,6 +6,7 @@ import com.bhw.covid_suburb_au.datasource.network.model.MobileCovidAuRawResponse
 import com.bhw.covid_suburb_au.datasource.network.service.MobileCovidService
 import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
 import com.bhw.covid_suburb_au.datasource.room.CovidAuEntity
+import com.bhw.covid_suburb_au.exception.NetworkFailure
 import com.bhw.covid_suburb_au.util.LocalDateTimeUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -36,6 +37,9 @@ class MobileCovidRepository @Inject constructor(
         if (response.isSuccessful && data is MobileCovidAuRawResponse) {
             Log.w("bbbb", "saved new COVID raw data(${data.dataVersion}) to db.")
             covidAuDao.save(data.mapToEntity())
+        } else {
+            Log.e("bbbb", "http failure response: $response")
+            throw NetworkFailure(response.code(), response.message())
         }
     }
 

@@ -1,6 +1,5 @@
 package com.bhw.covid_suburb_au.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.bhw.covid_suburb_au.datasource.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.datasource.model.AuState
@@ -14,7 +13,7 @@ import com.bhw.covid_suburb_au.view.dashboard.viewobject.CaseBySuburbViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.CasesByStateViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.StateItemViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.SuburbItemViewObject
-import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.covidExceptionHandler
+import com.bhw.covid_suburb_au.exception.ExceptionHelper.covidExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

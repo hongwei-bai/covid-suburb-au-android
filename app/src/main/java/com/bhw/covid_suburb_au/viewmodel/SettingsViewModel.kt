@@ -8,7 +8,7 @@ import com.bhw.covid_suburb_au.datasource.room.AuPostcodeEntity
 import com.bhw.covid_suburb_au.repository.AuPostcodeRepository
 import com.bhw.covid_suburb_au.repository.SettingsRepository
 import com.bhw.covid_suburb_au.view.settings.viewobject.SuburbMultipleSelectionListItem
-import com.bhw.covid_suburb_au.viewmodel.helper.ExceptionHelper.covidExceptionHandler
+import com.bhw.covid_suburb_au.exception.ExceptionHelper.covidExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
