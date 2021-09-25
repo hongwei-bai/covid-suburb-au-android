@@ -27,7 +27,7 @@ fun MainScreen() {
         Screen.Settings
     )
     val pagerState = rememberPagerState(pages.size)
-    val listener: PagerListener = object : PagerListener {
+    object : PagerListener {
         override fun onBackToDashboard() {
             coroutineScope.launch {
                 pagerState.animateScrollToPage(0)

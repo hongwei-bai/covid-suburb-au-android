@@ -97,6 +97,12 @@ android {
     }
 }
 
+sourceSets {
+    all {
+        languageSettings.optIn("org.mylibrary.OptInAnnotation")
+    }
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version_for_ide"

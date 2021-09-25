@@ -32,7 +32,7 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_compass))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_clock))
     Box(
         modifier = Modifier
             .fillMaxSize(),

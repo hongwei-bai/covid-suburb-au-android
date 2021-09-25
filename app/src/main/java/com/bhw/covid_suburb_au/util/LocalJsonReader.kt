@@ -7,9 +7,8 @@ import java.nio.charset.Charset
 
 
 object LocalJsonReader {
-    fun loadJSONFromAsset(context: Context, fileName: String): String? {
-        var json: String? = null
-        json = try {
+    fun loadJSONFromAsset(context: Context, fileName: String): String? =
+        try {
             val `is`: InputStream = context.assets.open(fileName)
             val size = `is`.available()
             val buffer = ByteArray(size)
@@ -18,8 +17,6 @@ object LocalJsonReader {
             String(buffer, Charset.forName("UTF-8"))
         } catch (ex: IOException) {
             ex.printStackTrace()
-            return null
+            null
         }
-        return json
-    }
 }
