@@ -1,6 +1,7 @@
 package com.bhw.covid_suburb_au.viewmodel
 
 import androidx.lifecycle.*
+import com.bhw.covid_suburb_au.datasource.ApiError
 import com.bhw.covid_suburb_au.datasource.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.datasource.model.AuState
 import com.bhw.covid_suburb_au.datasource.room.CovidAuCaseByStateEntity
@@ -14,6 +15,7 @@ import com.bhw.covid_suburb_au.view.dashboard.viewobject.CasesByStateViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.StateItemViewObject
 import com.bhw.covid_suburb_au.view.dashboard.viewobject.SuburbItemViewObject
 import com.bhw.covid_suburb_au.exception.ExceptionHelper.covidExceptionHandler
+import com.bhw.covid_suburb_au.view.component.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -27,6 +29,13 @@ class DashboardViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    val dataStatus = mobileCovidRepository.userErrorFlow.mapNotNull { userError ->
+        when (userError) {
+            is ApiError -> DataStatus.ServiceError(userError.message)
+            else -> null
+        }
+    }.asLiveData()
 
     val lastUpdate = mobileCovidRepository.getMobileCovidRawData().map { raw ->
         raw.lastUpdate

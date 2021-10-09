@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_clock))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_compass))
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -46,12 +47,15 @@ fun SplashScreen(navController: NavController) {
                 composition,
                 speed = 1.0f,
                 iterations = LottieConstants.IterateForever,
-                modifier = Modifier.requiredSizeIn(maxWidth = 240.dp, maxHeight = 240.dp).scale(0.75f)
+                modifier = Modifier
+                    .requiredSizeIn(maxWidth = 240.dp, maxHeight = 240.dp)
+                    .scale(0.85f)
             )
             Text(
                 text = stringResource(id = R.string.splash_loading_text),
                 color = MaterialTheme.colors.primary,
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.h5,
+                modifier = Modifier.alpha(0.65f)
             )
         }
     }

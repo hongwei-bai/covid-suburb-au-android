@@ -28,7 +28,7 @@ import com.bhw.covid_suburb_au.view.theme.Red900
 @Composable
 fun SuburbsBoard(data: CaseBySuburbViewObject, isCompat: Boolean, onExpandButtonClicked: () -> Unit) {
     LazyColumn {
-        items(data.list) {
+        items(items = data.list, key = { it.postcode }) {
             val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.map_pin2))
             Row(
                 modifier = Modifier
