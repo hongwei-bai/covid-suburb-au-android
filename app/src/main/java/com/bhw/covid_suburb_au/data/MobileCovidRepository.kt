@@ -32,36 +32,4 @@ class MobileCovidRepository @Inject constructor(
             }
         }
     )
-
-//    suspend fun fetchMobileCovidRawData() {
-//        val rawDataDb = covidAuDao.getRawData()
-//        val lastUpdateDaysDiff = LocalDateTimeUtil.getDayDiffFromToday(rawDataDb?.lastUpdate) ?: Long.MAX_VALUE
-//        if (lastUpdateDaysDiff > 1) {
-//            fetchMobileCovidRawDataFromBackend(rawDataDb?.dataVersion ?: -1)
-//        }
-//    }
-//
-//    suspend fun forceFetchMobileCovidRawData() {
-//        val rawDataDb = covidAuDao.getRawData()
-//        fetchMobileCovidRawDataFromBackend(rawDataDb?.dataVersion ?: -1)
-//    }
-//
-//    private suspend fun fetchMobileCovidRawDataFromBackend(dataVersion: Long = -1L) {
-//        Timber.w("fetch COVID raw data.(current ver: ${dataVersion})")
-//        val response = mobileCovidService.getRawData(1, dataVersion, 3, listOf(2118, 2075))
-//        val data = response.body()
-//        if (response.isSuccessful && data is MobileCovidAuRawResponse) {
-//            Timber.w("saved new COVID raw data(${data.dataVersion}) to db.")
-//            covidAuDao.save(data.mapToEntity())
-//        } else {
-//            Timber.e("http failure response: $response")
-//            userErrorChannel.trySend(ApiError(response.code(), response.message()))
-//        }
-//    }
-
-//    fun getMobileCovidRawData(): Flow<CovidAuEntity> {
-//        return covidAuDao.getRawDataFlow().onEach {
-//            it ?: fetchMobileCovidRawDataFromBackend()
-//        }.filterNotNull()
-//    }
 }

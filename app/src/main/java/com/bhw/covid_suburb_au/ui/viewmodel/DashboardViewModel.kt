@@ -24,8 +24,6 @@ class DashboardViewModel @Inject constructor(
     private val mobileCovidRepository: MobileCovidRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
-    val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
-
     val lastUpdate = mobileCovidRepository.getMobileCovidRawData().mapNotNull { raw ->
         raw.data?.lastUpdate
     }.asLiveData(viewModelScope.coroutineContext)
@@ -86,7 +84,7 @@ class DashboardViewModel @Inject constructor(
         settingsRepository.getPersonalSettingsFlow()
             .combine(mobileCovidRepository.getMobileCovidRawData()) { settings, resource ->
                 if (resource is Resource.Success && resource.data != null) {
-                    val fullList = getSuburbList(settings, resource.data!!)
+                    val fullList = getSuburbList(settings, resource.data)
                     settings?.let {
                         if (fullList.none { it.isMySuburb }) {
                             fullList.addMySuburbToList(settings)
@@ -104,10 +102,8 @@ class DashboardViewModel @Inject constructor(
             }.asLiveData(viewModelScope.coroutineContext)
 
     fun refresh() {
-        isRefreshing.value = true
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
-//            mobileCovidRepository.forceFetchMobileCovidRawData()
-            isRefreshing.postValue(false)
+            mobileCovidRepository.getMobileCovidRawData()
         }
     }
 

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import com.bhw.covid_suburb_au.data.MobileCovidRepository
+import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.ui.theme.CovidTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,11 +15,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var mobileCovidRepository: MobileCovidRepository
+    lateinit var auPostcodeRepository: AuPostcodeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             CovidTheme {
                 SystemUiController()

@@ -1,5 +1,6 @@
 package com.bhw.covid_suburb_au.data.util
 
+import android.util.Log
 import kotlinx.coroutines.flow.*
 
 inline fun <ResultType, RequestType> networkBoundResource(
@@ -11,6 +12,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
     val data = query().first()
 
     val flow = if (shouldFetch(data)) {
+        Log.d("bbbb", "fetch impl")
         emit(Resource.Loading(data))
 
         try {
