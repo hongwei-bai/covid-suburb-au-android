@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.bhw.covid_suburb_au.repository.MobileCovidRepository
 import com.bhw.covid_suburb_au.view.theme.CovidTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             CovidTheme {
                 SystemUiController()
 
-                NavComposeApp()
+                MainScreen()
             }
         }
     }
@@ -48,18 +45,5 @@ fun SystemUiController() {
         )
 
         // setStatusBarsColor() and setNavigationBarsColor() also exist
-    }
-}
-
-@Composable
-fun NavComposeApp() {
-    val navController = rememberNavController()
-    NavHost(navController, startDestination = "splash") {
-        composable("splash") {
-            SplashScreen(navController)
-        }
-        composable("main") {
-            MainScreen()
-        }
     }
 }
