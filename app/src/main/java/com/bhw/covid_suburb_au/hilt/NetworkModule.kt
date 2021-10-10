@@ -1,12 +1,12 @@
 package com.bhw.covid_suburb_au.hilt
 
 import android.content.Context
-import com.bhw.covid_suburb_au.constant.AppConfigurations
-import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_CONNECT_TIMEOUT
-import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_READ_TIMEOUT
-import com.bhw.covid_suburb_au.constant.AppConfigurations.Network.HTTP_WRITE_TIMEOUT
-import com.bhw.covid_suburb_au.datasource.network.interceptor.PublicAccessInterceptor
-import com.bhw.covid_suburb_au.datasource.network.service.MobileCovidService
+import com.bhw.covid_suburb_au.AppConfigurations
+import com.bhw.covid_suburb_au.AppConfigurations.Network.HTTP_CONNECT_TIMEOUT
+import com.bhw.covid_suburb_au.AppConfigurations.Network.HTTP_READ_TIMEOUT
+import com.bhw.covid_suburb_au.AppConfigurations.Network.HTTP_WRITE_TIMEOUT
+import com.bhw.covid_suburb_au.data.network.interceptor.PublicAccessInterceptor
+import com.bhw.covid_suburb_au.data.network.service.MobileCovidService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

@@ -2,10 +2,10 @@ package com.bhw.covid_suburb_au.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.bhw.covid_suburb_au.datasource.room.AuPostcodeDao
-import com.bhw.covid_suburb_au.datasource.room.CovidDatabase
-import com.bhw.covid_suburb_au.datasource.room.CovidAuDao
-import com.bhw.covid_suburb_au.datasource.room.SettingsDao
+import com.bhw.covid_suburb_au.data.room.AuPostcodeDao
+import com.bhw.covid_suburb_au.data.room.CovidDatabase
+import com.bhw.covid_suburb_au.data.room.CovidAuDao
+import com.bhw.covid_suburb_au.data.room.SettingsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

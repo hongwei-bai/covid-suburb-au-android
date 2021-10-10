@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.bhw.covid_suburb_au.view.main.MainActivity"
+            android:name="com.bhw.covid_suburb_au.ui.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Covid">
             <intent-filter>
