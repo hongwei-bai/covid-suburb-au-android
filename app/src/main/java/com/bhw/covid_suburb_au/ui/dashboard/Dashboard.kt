@@ -40,9 +40,7 @@ fun Dashboard() {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize()
         ) {
             when (data) {
                 is DashboardLoadingState -> LoadingContent(modifier = Modifier.size(240.dp))
