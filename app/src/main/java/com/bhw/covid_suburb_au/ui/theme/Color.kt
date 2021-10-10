@@ -3,6 +3,7 @@ package com.bhw.covid_suburb_au.ui.theme
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
+val Red500 = Color(0xFFDD2D55)
 val Red700 = Color(0xffdd0d3c)
 val Red800 = Color(0xffd00036)
 val Red900 = Color(0xffc20029)
@@ -20,13 +21,3 @@ val Grey60 = Color(0xff666666)
 val Grey50 = Color(0xff888888)
 val Grey40 = Color(0xffbbbbbb)
 val Grey20 = Color(0xffdddddd)
-
-val LightColors = lightColors(
-    primary = Red700,
-    primaryVariant = Red900,
-    onPrimary = Color.White,
-    secondary = Red700,
-    secondaryVariant = Red900,
-    onSecondary = Color.White,
-    error = Red800
-)

@@ -14,6 +14,10 @@
     <string name="click_to_see_full_suburb_list">Click to see more</string>
     <string name="click_to_show_compat_list">Click to show less</string>
 
+    <string name="dashboard_config_suburb_message1">You haven\'t configured your suburbs.</string>
+    <string name="dashboard_config_suburb_message2">Once you have done that, you can see new cases in your suburb and your followed suburbs.</string>
+    <string name="dashboard_config_suburb_message3">To do that, please go to settings to configure them.</string>
+
     <string name="covid">COVID-19</string>
     <string name="settings">Settings</string>
 
@@ -37,4 +41,6 @@
     <string name="delete">Delete</string>
     <string name="add">Add</string>
     <string name="add_now">Add now</string>
+
+    <string name="coming_soon">Coming soon&#8230;</string>
 </resources>

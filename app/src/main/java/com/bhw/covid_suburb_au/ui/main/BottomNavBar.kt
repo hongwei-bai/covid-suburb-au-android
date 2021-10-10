@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 fun BottomNavBar(pagerState: PagerState) {
     BottomNavigation {
         val coroutineScope = rememberCoroutineScope()
-        val items = listOf(Screen.Dashboard, Screen.Map, Screen.Trends, Screen.Settings)
+        val items = listOf(Screen.Dashboard, Screen.Map, Screen.News, Screen.Settings)
         items.forEach {
             BottomNavigationItem(
                 icon = { Icon(it.icon, "") },
                 selected = items.indexOf(it) == pagerState.currentPage,
                 label = { Text(text = it.label) },
                 unselectedContentColor = MaterialTheme.colors.onPrimary,
-                selectedContentColor = MaterialTheme.colors.primary,
+                selectedContentColor = MaterialTheme.colors.onSecondary,
                 modifier = Modifier.background(MaterialTheme.colors.background),
                 onClick = {
                     coroutineScope.launch {

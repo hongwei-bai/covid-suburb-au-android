@@ -52,7 +52,8 @@ fun SuburbsBoard(data: CaseBySuburbViewObject, isCompat: Boolean, onExpandButton
 
                 Text(
                     text = "${it.postcode} ${it.briefName}: ${CovidDisplayHelper.casesToDisplay(it.cases)}",
-                    color = if (it.isHighlighted) Red900 else MaterialTheme.colors.onPrimary,
+                    color = if (it.isHighlighted) MaterialTheme.colors.onError
+                    else MaterialTheme.colors.onPrimary,
                     fontWeight = if (it.isMySuburb) FontWeight.Bold else FontWeight.Normal,
                     modifier = Modifier
                         .wrapContentWidth()
@@ -70,7 +71,9 @@ fun SuburbsBoard(data: CaseBySuburbViewObject, isCompat: Boolean, onExpandButton
         }
         item {
             Row(
-                modifier = Modifier.height(64.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .height(64.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
                 TextButton(
@@ -83,6 +86,7 @@ fun SuburbsBoard(data: CaseBySuburbViewObject, isCompat: Boolean, onExpandButton
                         ),
                         style = MaterialTheme.typography.overline,
                         textDecoration = TextDecoration.Underline,
+                        color = MaterialTheme.colors.onSecondary,
                         modifier = Modifier.wrapContentWidth()
                     )
                 }

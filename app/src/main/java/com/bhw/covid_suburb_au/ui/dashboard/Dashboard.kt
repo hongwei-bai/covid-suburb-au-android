@@ -1,9 +1,6 @@
 package com.bhw.covid_suburb_au.ui.dashboard
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +31,6 @@ fun Dashboard() {
         state = rememberSwipeRefreshState(viewModel.isRefreshing.observeAsState().value == true),
         onRefresh = { viewModel.refresh() }
     ) {
-
         val data = viewModel.dashboardBasicData.observeAsState().value
         val dataBySuburbCompact = viewModel.suburbsDataCompact.observeAsState().value
         val dataBySuburbFull = viewModel.suburbsDataFull.observeAsState().value
@@ -56,13 +52,39 @@ fun Dashboard() {
                 is DashboardSuccessState -> {
                     DataStatusSnackBar(data.lastUpdate)
                     StatesBoard(data.dataByState)
-                    (if (isShowCompatList.value) dataBySuburbCompact else dataBySuburbFull)?.let {
+                    val suburbs = if (isShowCompatList.value) dataBySuburbCompact else dataBySuburbFull
+                    if (suburbs?.list != null && suburbs.list.isNotEmpty()) {
                         SuburbsBoard(
-                            data = it,
+                            data = suburbs,
                             isCompat = isShowCompatList.value
                         ) {
                             isShowCompatList.value = !isShowCompatList.value
                         }
+                    } else {
+                        Text(
+                            text = stringResource(R.string.dashboard_config_suburb_message1),
+                            style = MaterialTheme.typography.overline,
+                            color = MaterialTheme.colors.onSecondary,
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .padding(12.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.dashboard_config_suburb_message2),
+                            style = MaterialTheme.typography.overline,
+                            color = MaterialTheme.colors.onSecondary,
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .padding(12.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.dashboard_config_suburb_message3),
+                            style = MaterialTheme.typography.overline,
+                            color = MaterialTheme.colors.onSecondary,
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .padding(12.dp)
+                        )
                     }
                 }
             }

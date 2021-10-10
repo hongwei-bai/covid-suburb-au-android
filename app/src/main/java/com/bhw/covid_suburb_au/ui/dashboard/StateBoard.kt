@@ -28,7 +28,8 @@ fun StateBoard(data: StateItemViewObject) {
         Text(
             text = "${data.stateCode}: ${CovidDisplayHelper.casesToDisplay(data.cases)}",
             modifier = Modifier,
-            color = if (data.isHighlighted) Red900 else MaterialTheme.colors.onPrimary
+            color = if (data.isHighlighted) MaterialTheme.colors.onError
+            else MaterialTheme.colors.onPrimary
         )
     }
 }

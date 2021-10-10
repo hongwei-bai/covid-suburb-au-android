@@ -49,6 +49,7 @@ fun FollowedSuburbsSetting() {
                 text = stringResource(id = R.string.add),
                 style = MaterialTheme.typography.overline,
                 textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colors.onSecondary,
                 modifier = Modifier.wrapContentWidth()
             )
         }
@@ -79,6 +80,7 @@ fun FollowedSuburbsSetting() {
                             text = stringResource(id = R.string.unfollow),
                             style = MaterialTheme.typography.overline,
                             textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.colors.onSecondary,
                             modifier = Modifier.wrapContentWidth()
                         )
                     }

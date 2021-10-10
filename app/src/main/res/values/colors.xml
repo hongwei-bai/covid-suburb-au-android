@@ -3,5 +3,8 @@
     <color name="covid_primary">#FF4b8d8d</color>
     <color name="covid_light">#FFF5F5F5</color>
     <color name="covid_accent">#FF8AC0C0</color>
+    <color name="covid_dark">#FF202020</color>
 
+    <color name="covid_error">#FFC20029</color>
+    <color name="covid_error_dark">#FFDD2D55</color>
 </resources>

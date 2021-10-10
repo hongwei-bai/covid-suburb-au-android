@@ -54,6 +54,7 @@ fun SuburbSetting() {
                 text = stringResource(id = R.string.change),
                 style = MaterialTheme.typography.overline,
                 textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colors.onSecondary,
                 modifier = Modifier.wrapContentWidth()
             )
         }

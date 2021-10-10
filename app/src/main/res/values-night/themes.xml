@@ -1,14 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.Covid" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
         <item name="android:windowActivityTransitions">true</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/covid_primary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/covid_dark</item>
         <item name="android:colorPrimary">@color/covid_primary</item>
         <item name="android:textColorPrimary">@color/covid_light</item>
         <item name="android:colorSecondary" tools:targetApi="n_mr1">@color/covid_accent</item>
         <item name="android:textColorSecondary">@color/covid_light</item>
         <item name="android:textColor">@color/covid_light</item>
-        <item name="android:colorBackground">@color/covid_accent</item>
+        <item name="android:colorBackground">@color/covid_dark</item>
     </style>
 </resources>

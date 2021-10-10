@@ -6,7 +6,7 @@ object AppConfigurations {
         const val HTTP_WRITE_TIMEOUT = 15_000L
         const val HTTP_CONNECT_TIMEOUT = 15_000L
 
-        const val SERVICE_DOMAIN = "https://hongwei-test1.top"
+        private const val SERVICE_DOMAIN = "https://hongwei-test1.top"
         const val AUTHORIZATION_HEADER = "Authorization"
         const val AUTHORIZATION_BEARER = "Bearer"
 

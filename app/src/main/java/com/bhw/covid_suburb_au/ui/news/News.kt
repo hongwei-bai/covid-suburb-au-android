@@ -1,4 +1,4 @@
-package com.bhw.covid_suburb_au.ui.map
+package com.bhw.covid_suburb_au.ui.news
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
-fun CovidSuburbMap() {
+fun News() {
     val viewModel = hiltViewModel<DashboardViewModel>()
 
     SwipeRefresh(
@@ -34,3 +34,4 @@ fun CovidSuburbMap() {
         )
     }
 }
+

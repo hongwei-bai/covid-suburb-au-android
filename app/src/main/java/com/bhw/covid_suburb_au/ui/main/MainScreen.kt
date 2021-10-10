@@ -8,8 +8,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.bhw.covid_suburb_au.ui.dashboard.Dashboard
 import com.bhw.covid_suburb_au.ui.map.CovidSuburbMap
+import com.bhw.covid_suburb_au.ui.news.News
 import com.bhw.covid_suburb_au.ui.settings.Settings
-import com.bhw.covid_suburb_au.ui.trends.Trends
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -23,7 +23,7 @@ fun MainScreen() {
     val pages = listOf(
         Screen.Dashboard,
         Screen.Map,
-        Screen.Trends,
+        Screen.News,
         Screen.Settings
     )
     val pagerState = rememberPagerState(pages.size)
@@ -40,7 +40,7 @@ fun MainScreen() {
                 when (page) {
                     0 -> Dashboard()
                     1 -> CovidSuburbMap()
-                    2 -> Trends()
+                    2 -> News()
                     3 -> Settings()
                     else -> Unit
                 }
