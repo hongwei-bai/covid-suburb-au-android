@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 fun SystemUiController() {
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
-    val systemBarColor = MaterialTheme.colors.surface
+    val systemBarColor = MaterialTheme.colors.background
 
     SideEffect {
         // Update all of the system bar colors to be transparent, and use

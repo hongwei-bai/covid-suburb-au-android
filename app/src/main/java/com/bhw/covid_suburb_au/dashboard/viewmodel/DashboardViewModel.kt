@@ -41,6 +41,10 @@ class DashboardViewModel @Inject constructor(
 
     val isPostcodeInitialised: LiveData<Boolean> = _isPostcodeInitialised
 
+    private val _isCompatList = MutableLiveData(true)
+
+    val isCompatList: LiveData<Boolean> = _isCompatList
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _basicUiState.postValue(BasicUiState.Loading)
@@ -81,6 +85,7 @@ class DashboardViewModel @Inject constructor(
                 } else {
                     _suburbUiState.postValue(fullList)
                 }
+                _isCompatList.postValue(compatList)
             }
         }
     }

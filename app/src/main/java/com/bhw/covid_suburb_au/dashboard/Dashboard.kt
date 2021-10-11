@@ -5,9 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -29,10 +28,10 @@ fun Dashboard() {
         state = rememberSwipeRefreshState(basicUiState is BasicUiState.Loading),
         onRefresh = { viewModel.refresh() }
     ) {
-        val isPostcodeInitialised = viewModel.isPostcodeInitialised.observeAsState().value
-        val isShowCompatList = remember { mutableStateOf(true) }
+        val isPostcodeInitialised by viewModel.isPostcodeInitialised.observeAsState()
+        val isShowCompatList = viewModel.isCompatList.observeAsState().value ?: true
         val suburbUiState = viewModel.suburbUiState.observeAsState().value
-        val isSuburbConfigured = viewModel.isSuburbConfigured.observeAsState().value ?: true
+        val isSuburbConfigured by viewModel.isSuburbConfigured.observeAsState()
 
         if (isPostcodeInitialised == false) {
             InitialisationDialog()
@@ -53,12 +52,12 @@ fun Dashboard() {
                     if (suburbUiState?.isNotEmpty() == true) {
                         SuburbsBoard(
                             data = suburbUiState,
-                            isCompat = isShowCompatList.value
+                            isCompat = isShowCompatList
                         ) {
-                            isShowCompatList.value = !isShowCompatList.value
+                            viewModel.query(!isShowCompatList)
                         }
                     }
-                    if (!isSuburbConfigured) {
+                    if (isSuburbConfigured == false) {
                         SuburbUnconfiguredMessageView()
                     }
                 }
