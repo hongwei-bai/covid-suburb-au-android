@@ -5,11 +5,8 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,7 +20,7 @@ import com.bhw.covid_suburb_au.data.helper.AuSuburbHelper
 fun FollowedSuburbsSetting() {
     val viewModel = hiltViewModel<SettingsViewModel>()
 
-    val followedSuburbs = viewModel.followedSuburbs.observeAsState().value
+    val followedSuburbs by viewModel.followedSuburbs.observeAsState()
     val displayPickerDialog = remember { mutableStateOf(false) }
     val displayConfirmationDialog = remember { mutableStateOf(false) }
     val isNotEmpty = followedSuburbs?.isNullOrEmpty() == false

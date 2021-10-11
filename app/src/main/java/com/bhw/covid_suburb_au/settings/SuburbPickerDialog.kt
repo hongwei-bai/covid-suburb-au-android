@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,7 +21,7 @@ import com.bhw.covid_suburb_au.R
 fun SuburbPickerDialog(onSuburbPicked: (String?) -> Unit) {
     val viewModel = hiltViewModel<SettingsViewModel>()
 
-    val suburbSuggestions = viewModel.suburbSuggestions.observeAsState().value
+    val suburbSuggestions by viewModel.suburbSuggestions.observeAsState()
     val textTyping = remember { mutableStateOf("") }
     val expandedStatus = remember { mutableStateOf(false) }
     val expanded = expandedStatus.value && !suburbSuggestions.isNullOrEmpty()

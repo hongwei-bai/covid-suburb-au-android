@@ -1,6 +1,5 @@
 package com.bhw.covid_suburb_au.dashboard.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.bhw.covid_suburb_au.AppConfigurations.Configuration.TOP
 import com.bhw.covid_suburb_au.common.ExceptionHelper.covidExceptionHandler
@@ -12,10 +11,13 @@ import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.data.MobileCovidRepository
 import com.bhw.covid_suburb_au.data.SettingsRepository
 import com.bhw.covid_suburb_au.data.room.CovidAuEntity
+import com.bhw.covid_suburb_au.data.room.SettingsEntity
 import com.bhw.covid_suburb_au.data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,6 +57,10 @@ class DashboardViewModel @Inject constructor(
                 _isPostcodeInitialised.postValue(true)
             }
             query(true)
+
+            settingsRepository.getPersonalSettingsFlow().onEach {
+                refresh()
+            }.collect()
         }
     }
 
@@ -64,36 +70,43 @@ class DashboardViewModel @Inject constructor(
             val settings = settingsRepository.getPersonalSettings()
             val resource = mobileCovidRepository.getMobileCovidRawData(TOP, settings?.followedPostcodes)
             _basicUiState.postValue(resource.mapToUiState(settings?.myState))
-
-            if (resource is Resource.Success<CovidAuEntity>) {
-                val fullList = getSuburbList(settings, resource.data, auPostcodeRepository)
-                settings?.let {
-                    if (fullList.none { it.isMySuburb }) {
-                        fullList.addMySuburbToList(settings)
-                    }
-                    settings.followedPostcodes.forEach { postcode ->
-                        if (fullList.none { it.postcode == postcode }) {
-                            fullList.addFollowedSuburbToList(auPostcodeRepository, postcode)
-                        }
-                    }
-                }
-                if (compatList) {
-                    val compactList = fullList.filterIndexed { index, item ->
-                        index < TOP || item.isFollowed || item.isMySuburb
-                    }
-                    _suburbUiState.postValue(compactList)
-                } else {
-                    _suburbUiState.postValue(fullList)
-                }
-                _isCompatList.postValue(compatList)
-            }
+            updateSuburbUi(settings, resource, compatList)
+            _isCompatList.postValue(compatList)
         }
     }
 
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
+            _basicUiState.postValue(BasicUiState.Loading)
             val settings = settingsRepository.getPersonalSettings()
-            mobileCovidRepository.forceFetchMobileCovidRawData(TOP, settings?.followedPostcodes)
+            val resource = mobileCovidRepository.forceFetchMobileCovidRawData(TOP, settings?.followedPostcodes)
+            val compatList = isCompatList.value ?: true
+            _basicUiState.postValue(resource.mapToUiState(settings?.myState))
+            updateSuburbUi(settings, resource, compatList)
+        }
+    }
+
+    private suspend fun updateSuburbUi(settings: SettingsEntity?, resource: Resource<CovidAuEntity>, compatList: Boolean) {
+        if (resource is Resource.Success<CovidAuEntity>) {
+            val fullList = getSuburbList(settings, resource.data, auPostcodeRepository)
+            settings?.let {
+                if (fullList.none { it.isMySuburb }) {
+                    fullList.addMySuburbToList(settings)
+                }
+                settings.followedPostcodes.forEach { postcode ->
+                    if (fullList.none { it.postcode == postcode }) {
+                        fullList.addFollowedSuburbToList(auPostcodeRepository, postcode)
+                    }
+                }
+            }
+            if (compatList) {
+                val compactList = fullList.filterIndexed { index, item ->
+                    index < TOP || item.isFollowed || item.isMySuburb
+                }
+                _suburbUiState.postValue(compactList)
+            } else {
+                _suburbUiState.postValue(fullList)
+            }
         }
     }
 }
