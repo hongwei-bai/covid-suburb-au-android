@@ -10,7 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.bhw.covid_suburb_au.R
 import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
-import com.bhw.covid_suburb_au.dashboard.viewobject.StateItemViewObject
+import com.bhw.covid_suburb_au.dashboard.viewmodel.StateItemViewObject
 
 @Composable
 fun StateBoard(data: StateItemViewObject) {

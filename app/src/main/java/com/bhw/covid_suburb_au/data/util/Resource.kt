@@ -1,11 +1,7 @@
 package com.bhw.covid_suburb_au.data.util
 
-sealed class Resource<T>(
-    val data: T? = null,
-    val error: Throwable? = null
-) {
-    class Success<T>(data: T) : Resource<T>(data)
-    class NoUpdate<T>(data: T) : Resource<T>(data)
-    class Loading<T>(data: T? = null) : Resource<T>(data)
-    class Error<T>(throwable: Throwable, data: T? = null) : Resource<T>(data, throwable)
+sealed interface Resource<T> {
+    data class Success<T>(val data: T, val new: Boolean = true) : Resource<T>
+    class Loading<T> : Resource<T>
+    data class Error<T>(val throwable: Throwable? = null) : Resource<T>
 }

@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bhw.covid_suburb_au.dashboard.viewobject.CasesByStateViewObject
+import com.bhw.covid_suburb_au.dashboard.viewmodel.CasesByStateViewObject
 
 @Composable
 fun StatesBoard(data: CasesByStateViewObject) {

@@ -24,7 +24,7 @@ class SplashViewModel @Inject constructor(
             if (!auPostcodeRepository.checkNeedInitialization()) {
                 auPostcodeRepository.initialize()
             }
-            mobileCovidRepository.getMobileCovidRawData()
+//            mobileCovidRepository.getMobileCovidRawData()
             viewModelScope.launch(Dispatchers.Main + covidExceptionHandler) {
                 onPreloadComplete.invoke()
             }

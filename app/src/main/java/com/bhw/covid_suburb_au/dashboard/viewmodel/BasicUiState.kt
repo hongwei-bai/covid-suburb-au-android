@@ -1,15 +1,15 @@
-package com.bhw.covid_suburb_au.dashboard.viewobject
+package com.bhw.covid_suburb_au.dashboard.viewmodel
 
-sealed interface DashboardViewState
+sealed interface BasicUiState {
+    data class Success(
+        val lastUpdate: String,
+        val dataByState: CasesByStateViewObject
+    ) : BasicUiState
 
-data class DashboardSuccessState(
-    val lastUpdate: String,
-    val dataByState: CasesByStateViewObject
-) : DashboardViewState
+    object Error : BasicUiState
 
-object DashboardErrorState : DashboardViewState
-
-object DashboardLoadingState : DashboardViewState
+    object Loading : BasicUiState
+}
 
 data class CasesByStateViewObject(
     val nsw: StateItemViewObject,

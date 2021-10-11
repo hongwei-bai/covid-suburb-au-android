@@ -21,13 +21,13 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.bhw.covid_suburb_au.R
+import com.bhw.covid_suburb_au.dashboard.viewmodel.SuburbUiState
 import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
-import com.bhw.covid_suburb_au.dashboard.viewobject.CaseBySuburbViewObject
 
 @Composable
-fun SuburbsBoard(data: CaseBySuburbViewObject, isCompat: Boolean, onExpandButtonClicked: () -> Unit) {
+fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onExpandButtonClicked: () -> Unit) {
     LazyColumn {
-        items(items = data.list, key = { it.postcode }) {
+        items(items = data, key = { it.postcode }) {
             val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.map_pin2))
             Row(
                 modifier = Modifier
