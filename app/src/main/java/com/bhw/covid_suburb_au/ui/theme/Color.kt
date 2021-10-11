@@ -1,6 +1,5 @@
 package com.bhw.covid_suburb_au.ui.theme
 
-import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 val Red500 = Color(0xFFDD2D55)
