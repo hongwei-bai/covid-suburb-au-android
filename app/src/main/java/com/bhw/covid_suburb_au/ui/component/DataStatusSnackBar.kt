@@ -20,8 +20,8 @@ fun DataStatusSnackBar(lastUpdate: String?) {
     ) {
         Text(
             text = lastUpdate?.let {
-                stringResource(id = R.string.snack_bar_last_update, it)
-            } ?: stringResource(id = R.string.snack_bar_last_update_never),
+                stringResource(id = R.string.banner_last_update, it)
+            } ?: stringResource(id = R.string.banner_last_update_never),
             style = MaterialTheme.typography.overline,
             color = MaterialTheme.colors.onPrimary
         )

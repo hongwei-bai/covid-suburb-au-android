@@ -16,7 +16,7 @@ import com.bhw.covid_suburb_au.R
 
 @Composable
 fun LoadingContent(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_clock))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading_bubble))
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -25,7 +25,7 @@ fun LoadingContent(modifier: Modifier = Modifier) {
             composition,
             speed = 0.8f,
             iterations = LottieConstants.IterateForever,
-            modifier = modifier.scale(0.75f)
+            modifier = modifier.scale(0.8f)
         )
     }
 }

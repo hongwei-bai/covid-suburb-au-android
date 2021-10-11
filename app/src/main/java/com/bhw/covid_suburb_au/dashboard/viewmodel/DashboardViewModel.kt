@@ -37,12 +37,26 @@ class DashboardViewModel @Inject constructor(
         it?.myPostcode != null && it.myPostcode > 0L
     }.asLiveData(Dispatchers.IO)
 
+    private val _isPostcodeInitialised = MutableLiveData(true)
+
+    val isPostcodeInitialised: LiveData<Boolean> = _isPostcodeInitialised
+
     init {
-        query(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            _basicUiState.postValue(BasicUiState.Loading)
+            val initialised = auPostcodeRepository.checkIsInitialised()
+            _isPostcodeInitialised.postValue(initialised)
+            if (!initialised) {
+                auPostcodeRepository.initialize()
+                _isPostcodeInitialised.postValue(true)
+            }
+            query(true)
+        }
     }
 
     fun query(compatList: Boolean) {
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
+            _basicUiState.postValue(BasicUiState.Loading)
             val settings = settingsRepository.getPersonalSettings()
             val resource = mobileCovidRepository.getMobileCovidRawData(TOP, settings?.followedPostcodes)
             _basicUiState.postValue(resource.mapToUiState(settings?.myState))
