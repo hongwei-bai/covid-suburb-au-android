@@ -6,6 +6,35 @@ The app is aiming to help people in Australia keeping safe from COVID-19.
 
 By choosing your currently living suburb and following your most visit suburbs, you may closely being kept updated about new cases every day in these suburbs.
 
+#### Interest points in terms of Modern Android Development(MAD) skills:
+- [x] Android Jetpack: Compose
+- [x] Jetpack Compose Theming and dark mode ready
+- [x] Splash screen (for Android 12/previous versions)
+- [x] Android Jetpack: Navigation
+- [x] Android Jetpack: Room
+- [x] Hilt
+- [x] OkHttp + Retrofit
+- [x] Kotlin Coroutines
+
+The architecture of the App would use MVVM, with layers:
+- View
+- View Model
+- Data(Repository/Data Source)
+
+#### How data flows to ui?
+
+In this project, I am using a best practice so far recommended from Google samples.
+
+Data layer(repository) implements sequential functions and returns data wrapped by a Resource<T> type.
+
+ViewModel implements sequential functions too and post these wrapped data to ui via LiveData.
+
+Benefits are:
+
+1. [x] Wrapped data are stateful, mapping different ui states easily(loading, success, error etc.)
+
+1. [x] In ViewModel, ui triggers use case alike behaviours easily.
+
 Dashboard
 
 <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_dash.png" width="300" height="600" />

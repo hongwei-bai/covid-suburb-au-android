@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -46,8 +47,9 @@ fun NoContentView(
             Text(
                 text = buttonText,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.onError
+                style = MaterialTheme.typography.overline,
+                textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colors.onSecondary,
             )
         }
     }

@@ -1,23 +1,17 @@
 package com.bhw.covid_suburb_au.settings
 
 import androidx.lifecycle.*
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import com.bhw.covid_suburb_au.common.ExceptionHelper.covidExceptionHandler
 import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.data.SettingsRepository
 import com.bhw.covid_suburb_au.data.helper.AuSuburbHelper
 import com.bhw.covid_suburb_au.data.room.AuPostcodeEntity
-import com.bhw.covid_suburb_au.common.ExceptionHelper.covidExceptionHandler
 import com.bhw.covid_suburb_au.settings.viewobject.SuburbMultipleSelectionListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -111,19 +105,6 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-
-    val suburbs: Flow<PagingData<AuPostcodeEntity>> = Pager(
-        config = PagingConfig(
-            pageSize = 15,
-            enablePlaceholders = true,
-            maxSize = 5000
-        )
-    ) {
-        Timber.d("page load start")
-        val r = auPostcodeRepository.getPostcodesPagingSource()
-        Timber.d("page load completed: $r")
-        r
-    }.flow.cachedIn(viewModelScope)
 
     fun updateFollowedSuburbsPickerInput(inputString: String) {
         followedSuburbSearchKeyword = inputString

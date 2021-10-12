@@ -1,8 +1,6 @@
 package com.bhw.covid_suburb_au.data
 
 import android.content.Context
-import android.util.Log
-import androidx.paging.PagingSource
 import com.bhw.covid_suburb_au.data.model.AuPostcodeSource
 import com.bhw.covid_suburb_au.data.room.AuPostcodeDao
 import com.bhw.covid_suburb_au.data.room.AuPostcodeEntity
@@ -38,8 +36,6 @@ class AuPostcodeRepository @Inject constructor(
 
     suspend fun getPostcodes(postcode: Long, radius: Int): List<AuPostcodeEntity> =
         auPostcodeDao.findPostcodesInRange(postcode - radius, postcode + radius)
-
-    fun getPostcodesPagingSource(): PagingSource<Int, AuPostcodeEntity> = auPostcodeDao.getPostcodesPagingSource()
 
     suspend fun checkIsInitialised(): Boolean = auPostcodeDao.getAllPostcodes().size == 3312
 

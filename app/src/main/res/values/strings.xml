@@ -1,22 +1,27 @@
 <resources>
     <string name="app_name">Covid AU Suburbs</string>
     <string name="splash_loading_text">Loading&#8230;</string>
-    <string name="postcode_initialise_message">"Initialising for first time launch&#8230;"</string>
 
+    // Dashboard
     <string name="banner_last_update">Last update: %1$s</string>
     <string name="banner_last_update_never">Last update: Never</string>
     <string name="banner_data_up_to_date">Your data is up to date.</string>
-
+    <string name="postcode_initialise_message">"Initialising for first time launch&#8230;"</string>
+    <string name="dashboard_config_suburb_message1">You haven\'t configured your suburbs.</string>
+    <string name="dashboard_config_suburb_message2">Once you have done that, you can see new cases in your suburb and your followed suburbs.</string>
+    <string name="dashboard_config_suburb_message3">To do that, please go to settings to configure them.</string>
     <string name="home_icon_content_description">This is the suburb you are living at.</string>
     <string name="follow_icon_content_description">This is a suburb you are following.</string>
     <string name="state_home_icon_content_description">This is the state you are living in.</string>
     <string name="click_to_see_full_suburb_list">Click to see more</string>
     <string name="click_to_show_compat_list">Click to show less</string>
 
-    <string name="dashboard_config_suburb_message1">You haven\'t configured your suburbs.</string>
-    <string name="dashboard_config_suburb_message2">Once you have done that, you can see new cases in your suburb and your followed suburbs.</string>
-    <string name="dashboard_config_suburb_message3">To do that, please go to settings to configure them.</string>
+    // Error and empty screens
+    <string name="generic_error">Oops! Something is wrong, please try again later.</string>
+    <string name="retry">Retry</string>
+    <string name="coming_soon">Coming soon&#8230;</string>
 
+    // Settings
     <string name="covid">COVID-19</string>
     <string name="settings">Settings</string>
 
@@ -40,7 +45,4 @@
     <string name="delete">Delete</string>
     <string name="add">Add</string>
     <string name="add_now">Add now</string>
-
-    <string name="generic_error">Oops! Something is wrong, please try again later.</string>
-    <string name="coming_soon">Coming soon&#8230;</string>
 </resources>
