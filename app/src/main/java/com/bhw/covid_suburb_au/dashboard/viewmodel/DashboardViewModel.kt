@@ -68,7 +68,7 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             _basicUiState.postValue(BasicUiState.Loading)
             val settings = settingsRepository.getPersonalSettings()
-            val resource = mobileCovidRepository.getMobileCovidRawData(settings?.followedPostcodes)
+            val resource = mobileCovidRepository.getMobileCovidRawData()
             _basicUiState.postValue(resource.mapToUiState(settings?.myState))
             updateSuburbUi(settings, resource, compatList)
             _isCompatList.postValue(compatList)
@@ -79,7 +79,7 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             _basicUiState.postValue(BasicUiState.Loading)
             val settings = settingsRepository.getPersonalSettings()
-            val resource = mobileCovidRepository.forceFetchMobileCovidRawData(settings?.followedPostcodes)
+            val resource = mobileCovidRepository.forceFetchMobileCovidRawData()
             val compatList = isCompatList.value ?: true
             _basicUiState.postValue(resource.mapToUiState(settings?.myState))
             updateSuburbUi(settings, resource, compatList)

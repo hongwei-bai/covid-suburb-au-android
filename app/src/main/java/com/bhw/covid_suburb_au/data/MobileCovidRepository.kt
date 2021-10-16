@@ -15,18 +15,15 @@ class MobileCovidRepository @Inject constructor(
     private val mobileCovidService: MobileCovidService,
     private val covidAuDao: CovidAuDao,
 ) {
-    suspend fun getMobileCovidRawData(followedSuburbs: List<Int>?): Resource<CovidAuEntity> =
+    suspend fun getMobileCovidRawData(): Resource<CovidAuEntity> =
         covidAuDao.getRawData()?.let {
             Resource.Success(it)
-        } ?: fetchMobileCovidRawDataFromBackend(followedSuburbs)
+        } ?: fetchMobileCovidRawDataFromBackend()
 
-    suspend fun forceFetchMobileCovidRawData(followedSuburbs: List<Int>?): Resource<CovidAuEntity> =
-        fetchMobileCovidRawDataFromBackend(followedSuburbs, true)
+    suspend fun forceFetchMobileCovidRawData(): Resource<CovidAuEntity> =
+        fetchMobileCovidRawDataFromBackend(true)
 
-    private suspend fun fetchMobileCovidRawDataFromBackend(
-        followedSuburbs: List<Int>? = null,
-        forceUpdate: Boolean = false
-    ): Resource<CovidAuEntity> =
+    private suspend fun fetchMobileCovidRawDataFromBackend(forceUpdate: Boolean = false): Resource<CovidAuEntity> =
         try {
             val cache = covidAuDao.getRawData()
             val requestDataVersion = if (forceUpdate) {
@@ -36,8 +33,7 @@ class MobileCovidRepository @Inject constructor(
             }
             Timber.i("fetch COVID raw data. forceUpdate: $forceUpdate (current ver: ${cache?.dataVersion})")
             val response = mobileCovidService.getRawData(
-                dataVersion = requestDataVersion,
-                followedSuburbs = followedSuburbs?.joinToString(",")
+                dataVersion = requestDataVersion
             )
             val data = response.body()
             if (response.isSuccessful) {

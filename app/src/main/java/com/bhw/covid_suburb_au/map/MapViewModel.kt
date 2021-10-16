@@ -1,15 +1,17 @@
 package com.bhw.covid_suburb_au.map
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bhw.covid_suburb_au.common.ExceptionHelper.covidExceptionHandler
 import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.data.MobileCovidRepository
 import com.bhw.covid_suburb_au.data.SettingsRepository
+import com.bhw.covid_suburb_au.data.helper.AuSuburbHelper
+import com.bhw.covid_suburb_au.data.util.Resource
 import com.google.android.libraries.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,4 +32,26 @@ class MapViewModel @Inject constructor(
                 } ?: MapLocationUiState.Unavailable
             } ?: MapLocationUiState.Unavailable
         }.asLiveData(viewModelScope.coroutineContext + covidExceptionHandler)
+
+    val lgaWithCases = MutableLiveData<List<LgaUiState>>()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val list = when (val resource = mobileCovidRepository.getMobileCovidRawData()) {
+                is Resource.Success -> resource.data.caseByLga.mapNotNull { lga ->
+                    val postcodeInfo = auPostcodeRepository.getPostcode(lga.postcode)
+                    postcodeInfo?.suburbs?.firstOrNull()?.let { suburb ->
+                        LgaUiState(
+                            postcode = lga.postcode,
+                            location = LatLng(suburb.latitude, suburb.longitude),
+                            name = AuSuburbHelper.getSuburbBrief(postcodeInfo.suburbs.map { it.suburb }) ?: "",
+                            newCases = lga.newCases
+                        )
+                    }
+                }
+                else -> emptyList()
+            }
+            lgaWithCases.postValue(list)
+        }
+    }
 }
