@@ -8,9 +8,7 @@ import retrofit2.http.Query
 interface MobileCovidService {
     @GET("raw.do")
     suspend fun getRawData(
-        @Query("days") days: Int,
         @Query("dataVersion") dataVersion: Long = -1,
-        @Query("tops") tops: Int,
-        @Query("followedSuburbs") followedSuburbs: List<Long>
+        @Query("followedSuburbs") followedSuburbs: String? = null
     ): Response<MobileCovidAuRawResponse>
 }

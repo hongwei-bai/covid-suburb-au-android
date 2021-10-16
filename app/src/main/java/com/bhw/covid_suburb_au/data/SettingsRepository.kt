@@ -21,18 +21,18 @@ class SettingsRepository @Inject constructor(
 
     suspend fun getPersonalSettings(): SettingsEntity? = settingsDao.getSettings()
 
-    suspend fun getSuburbBriefByPostcode(postcode: Long): String? =
+    suspend fun getSuburbBriefByPostcode(postcode: Int): String? =
         auPostcodeDao.findPostcode(postcode)?.let { entity ->
             AuSuburbHelper.getSuburbBrief(entity.suburbs.map { it.suburb })
         }
 
-    suspend fun getAllSuburbsByPostcode(postcode: Long): List<String>? =
+    suspend fun getAllSuburbsByPostcode(postcode: Int): List<String>? =
         auPostcodeDao.findPostcode(postcode)?.let { entity ->
             entity.suburbs.map { it.suburb }
         }
 
     suspend fun saveMyPostcode(
-        postcode: Long,
+        postcode: Int,
         suburb: String?,
         state: String = PostcodeToStateMap.toState(postcode)?.name ?: AuState.NSW.name
     ) {
@@ -53,7 +53,7 @@ class SettingsRepository @Inject constructor(
         }
     }
 
-    suspend fun saveFollowedPostcodes(list: List<Long>) {
+    suspend fun saveFollowedPostcodes(list: List<Int>) {
         val record = settingsDao.getSettings()
         if (record != null) {
             record.followedPostcodes.clear()

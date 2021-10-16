@@ -10,7 +10,7 @@ object AppConfigurations {
         const val AUTHORIZATION_HEADER = "Authorization"
         const val AUTHORIZATION_BEARER = "Bearer"
 
-        const val MOBILE_COVID_ENDPOINT = "$SERVICE_DOMAIN/application-service-covid/covid/au/"
+        const val MOBILE_COVID_ENDPOINT = "$SERVICE_DOMAIN/application-service-covid/covid-v2/au/"
     }
 
     object HttpCode {
@@ -28,7 +28,5 @@ object AppConfigurations {
         const val STATE_HIGHLIGHT_THRESHOLD = 100
 
         const val SUBURB_HIGHLIGHT_THRESHOLD = 10
-
-        const val DASHBOARD_DATA_IN_DAY = 1
     }
 }

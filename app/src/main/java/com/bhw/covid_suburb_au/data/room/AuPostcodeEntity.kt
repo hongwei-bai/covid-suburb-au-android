@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 data class AuPostcodeEntity(
     @PrimaryKey
     @SerializedName("postcode")
-    val postcode: Long = 0L,
+    val postcode: Int = 0,
 
     @SerializedName("suburbs")
     val suburbs: List<AuSuburbEntity> = emptyList()

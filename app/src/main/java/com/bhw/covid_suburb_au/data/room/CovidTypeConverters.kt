@@ -7,13 +7,25 @@ import java.lang.reflect.Type
 
 object CovidTypeConverters {
     @TypeConverter
-    fun fromStringToMobileCovidAuDayList(value: String?): List<CovidAuDayEntity>? {
-        val listType: Type = object : TypeToken<List<CovidAuDayEntity>?>() {}.type
+    fun fromStringToMobileCovidAuCaseByStateEntity(value: String?): List<CovidAuCaseByStateEntity>? {
+        val listType: Type = object : TypeToken<List<CovidAuCaseByStateEntity>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun fromMobileCovidAuDayList(list: List<CovidAuDayEntity>?): String? {
+    fun fromMobileCovidAuCaseByStateEntity(list: List<CovidAuCaseByStateEntity>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromStringToMobileCovidAuCaseByLgaEntity(value: String?): List<CovidAuCaseByLgaEntity>? {
+        val listType: Type = object : TypeToken<List<CovidAuCaseByLgaEntity>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromMobileCovidAuCaseByLgaEntity(list: List<CovidAuCaseByLgaEntity>?): String? {
         val gson = Gson()
         return gson.toJson(list)
     }
@@ -31,13 +43,13 @@ object CovidTypeConverters {
     }
 
     @TypeConverter
-    fun fromStringToLongList(value: String?): List<Long>? {
-        val listType: Type = object : TypeToken<List<Long>?>() {}.type
+    fun fromStringToIntList(value: String?): List<Int> {
+        val listType: Type = object : TypeToken<List<Int>>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun fromLongList(list: List<Long>?): String? {
+    fun fromIntList(list: List<Int>): String? {
         val gson = Gson()
         return gson.toJson(list)
     }

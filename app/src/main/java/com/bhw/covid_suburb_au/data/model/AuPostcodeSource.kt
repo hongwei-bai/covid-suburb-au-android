@@ -1,7 +1,7 @@
 package com.bhw.covid_suburb_au.data.model
 
 data class AuPostcodeSource(
-        val postcode: Long,
+        val postcode: Int,
         val place_name: String,
         val state_name: String,
         val state_code: String,

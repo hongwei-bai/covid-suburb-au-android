@@ -3,7 +3,7 @@ package com.bhw.covid_suburb_au.data.helper
 import com.bhw.covid_suburb_au.data.model.AuState
 
 object PostcodeToStateMap {
-    fun toState(postcode: Long?): AuState? =
+    fun toState(postcode: Int?): AuState? =
         postcode?.let {
             when (postcode) {
                 in 1000..1999 -> AuState.NSW

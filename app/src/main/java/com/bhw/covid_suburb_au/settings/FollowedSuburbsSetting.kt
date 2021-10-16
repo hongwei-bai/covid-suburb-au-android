@@ -25,7 +25,7 @@ fun FollowedSuburbsSetting() {
     val displayConfirmationDialog = remember { mutableStateOf(false) }
     val isNotEmpty = followedSuburbs?.isNullOrEmpty() == false
 
-    val pendingUnfollowPostcode: MutableState<Long?> = remember { mutableStateOf(null) }
+    val pendingUnfollowPostcode: MutableState<Int?> = remember { mutableStateOf(null) }
     val pendingUnfollowSuburb: MutableState<String?> = remember { mutableStateOf(null) }
 
     Row(

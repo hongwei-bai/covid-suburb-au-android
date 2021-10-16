@@ -13,7 +13,7 @@ data class SettingsEntity(
     val apiVersion: Int = API_VERSION,
 
     @SerializedName("my_postcode")
-    var myPostcode: Long = 0L,
+    var myPostcode: Int = 0,
 
     @SerializedName("my_suburb")
     var mySuburb: String?,
@@ -22,5 +22,5 @@ data class SettingsEntity(
     var myState: String = "",
 
     @SerializedName("followed_postcodes")
-    val followedPostcodes: MutableList<Long> = mutableListOf()
+    val followedPostcodes: MutableList<Int> = mutableListOf()
 )

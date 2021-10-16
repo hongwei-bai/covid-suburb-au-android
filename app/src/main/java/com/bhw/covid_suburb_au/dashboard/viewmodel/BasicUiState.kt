@@ -26,6 +26,6 @@ data class StateItemViewObject(
     val stateCode: String,
     val stateFullName: String,
     val isMyState: Boolean = false,
-    val cases: Int,
+    val cases: Long,
     val isHighlighted: Boolean
 )

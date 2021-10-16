@@ -1,7 +1,6 @@
 package com.bhw.covid_suburb_au.data
 
 import com.bhw.covid_suburb_au.AppConfigurations
-import com.bhw.covid_suburb_au.AppConfigurations.Configuration.DASHBOARD_DATA_IN_DAY
 import com.bhw.covid_suburb_au.data.network.model.MobileCovidAuRawMapper.mapToEntity
 import com.bhw.covid_suburb_au.data.network.model.MobileCovidAuRawResponse
 import com.bhw.covid_suburb_au.data.network.service.MobileCovidService
@@ -16,17 +15,16 @@ class MobileCovidRepository @Inject constructor(
     private val mobileCovidService: MobileCovidService,
     private val covidAuDao: CovidAuDao,
 ) {
-    suspend fun getMobileCovidRawData(topSuburb: Int, followedSuburbs: List<Long>?): Resource<CovidAuEntity> =
+    suspend fun getMobileCovidRawData(followedSuburbs: List<Int>?): Resource<CovidAuEntity> =
         covidAuDao.getRawData()?.let {
             Resource.Success(it)
-        } ?: fetchMobileCovidRawDataFromBackend(topSuburb, followedSuburbs)
+        } ?: fetchMobileCovidRawDataFromBackend(followedSuburbs)
 
-    suspend fun forceFetchMobileCovidRawData(topSuburb: Int, followedSuburbs: List<Long>?): Resource<CovidAuEntity> =
-        fetchMobileCovidRawDataFromBackend(topSuburb, followedSuburbs, true)
+    suspend fun forceFetchMobileCovidRawData(followedSuburbs: List<Int>?): Resource<CovidAuEntity> =
+        fetchMobileCovidRawDataFromBackend(followedSuburbs, true)
 
     private suspend fun fetchMobileCovidRawDataFromBackend(
-        topSuburb: Int,
-        followedSuburbs: List<Long>? = null,
+        followedSuburbs: List<Int>? = null,
         forceUpdate: Boolean = false
     ): Resource<CovidAuEntity> =
         try {
@@ -38,10 +36,8 @@ class MobileCovidRepository @Inject constructor(
             }
             Timber.i("fetch COVID raw data. forceUpdate: $forceUpdate (current ver: ${cache?.dataVersion})")
             val response = mobileCovidService.getRawData(
-                days = DASHBOARD_DATA_IN_DAY,
                 dataVersion = requestDataVersion,
-                tops = topSuburb,
-                followedSuburbs = followedSuburbs ?: emptyList()
+                followedSuburbs = followedSuburbs?.joinToString(",")
             )
             val data = response.body()
             if (response.isSuccessful) {

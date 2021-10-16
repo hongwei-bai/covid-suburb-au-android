@@ -14,33 +14,32 @@ object DashboardUiStateMapper {
     fun Resource<CovidAuEntity>.mapToUiState(myState: String?): BasicUiState = when (this) {
         is Resource.Loading -> BasicUiState.Loading
         is Resource.Success -> data.mapToUiState(myState)?.let {
-            BasicUiState.Success(data.lastUpdate, it)
+            BasicUiState.Success(data.dataVersion.toString(), it)
         } ?: BasicUiState.Error
         is Resource.Error -> BasicUiState.Error
     }
 
     private fun CovidAuEntity.mapToUiState(myState: String?): CasesByStateViewObject? =
-        dataByDay.firstOrNull()?.caseByState?.run {
-            val myState = myState
+        caseByState.run {
             CasesByStateViewObject(
-                nsw = mapToStateViewObject("NSW", firstOrNull { it.stateCode == AuState.NSW.name }, myState),
-                vic = mapToStateViewObject("VIC", firstOrNull { it.stateCode == AuState.VIC.name }, myState),
-                act = mapToStateViewObject("ACT", firstOrNull { it.stateCode == AuState.ACT.name }, myState),
-                wa = mapToStateViewObject("WA", firstOrNull { it.stateCode == AuState.WA.name }, myState),
-                sa = mapToStateViewObject("SA", firstOrNull { it.stateCode == AuState.SA.name }, myState),
-                tas = mapToStateViewObject("TAS", firstOrNull { it.stateCode == AuState.TAS.name }, myState),
-                nt = mapToStateViewObject("NT", firstOrNull { it.stateCode == AuState.NT.name }, myState),
-                qld = mapToStateViewObject("QLD", firstOrNull { it.stateCode == AuState.QLD.name }, myState)
+                nsw = mapToStateViewObject("NSW", firstOrNull { it.state == AuState.NSW.name }, myState),
+                vic = mapToStateViewObject("VIC", firstOrNull { it.state == AuState.VIC.name }, myState),
+                act = mapToStateViewObject("ACT", firstOrNull { it.state == AuState.ACT.name }, myState),
+                wa = mapToStateViewObject("WA", firstOrNull { it.state == AuState.WA.name }, myState),
+                sa = mapToStateViewObject("SA", firstOrNull { it.state == AuState.SA.name }, myState),
+                tas = mapToStateViewObject("TAS", firstOrNull { it.state == AuState.TAS.name }, myState),
+                nt = mapToStateViewObject("NT", firstOrNull { it.state == AuState.NT.name }, myState),
+                qld = mapToStateViewObject("QLD", firstOrNull { it.state == AuState.QLD.name }, myState)
             )
         }
 
     private fun mapToStateViewObject(stateCode: String, entity: CovidAuCaseByStateEntity?, myState: String?): StateItemViewObject =
         StateItemViewObject(
             stateCode = stateCode,
-            stateFullName = entity?.stateName ?: stateCode,
-            isMyState = myState != null && entity?.stateCode == myState,
-            cases = entity?.cases ?: 0,
-            isHighlighted = entity?.cases ?: 0 >= STATE_HIGHLIGHT_THRESHOLD
+            stateFullName = stateCode,
+            isMyState = myState != null && entity?.state == myState,
+            cases = entity?.newCases ?: 0,
+            isHighlighted = entity?.newCases ?: 0 >= STATE_HIGHLIGHT_THRESHOLD
         )
 
     suspend fun getSuburbList(
@@ -48,13 +47,13 @@ object DashboardUiStateMapper {
         data: CovidAuEntity,
         postcodeRepo: AuPostcodeRepository
     ): MutableList<SuburbUiState> =
-        data.dataByDay.first().caseByPostcode.mapNotNull { postcodeRawData ->
+        data.caseByLga.mapNotNull { postcodeRawData ->
             val postcodeInfo = postcodeRepo.getPostcode(postcodeRawData.postcode)
             val myPostcode = settings?.myPostcode
             val followedPostcodes = settings?.followedPostcodes
             postcodeInfo?.let { entity ->
                 SuburbUiState(
-                    rank = data.dataByDay.first().caseByPostcode.indexOf(postcodeRawData),
+                    rank = data.caseByLga.indexOf(postcodeRawData),
                     postcode = postcodeRawData.postcode,
                     briefName = if (myPostcode == entity.postcode) {
                         settings.mySuburb ?: AuSuburbHelper.getSuburbBrief(postcodeInfo.suburbs.map { it.suburb })
@@ -63,8 +62,8 @@ object DashboardUiStateMapper {
                         AuSuburbHelper.getSuburbBrief(postcodeInfo.suburbs.map { it.suburb })
                             ?: postcodeInfo.suburbs.joinToString(",")
                     },
-                    cases = postcodeRawData.cases,
-                    isHighlighted = postcodeRawData.cases >= AppConfigurations.Configuration.SUBURB_HIGHLIGHT_THRESHOLD,
+                    cases = postcodeRawData.newCases,
+                    isHighlighted = postcodeRawData.newCases >= AppConfigurations.Configuration.SUBURB_HIGHLIGHT_THRESHOLD,
                     isMySuburb = myPostcode == entity.postcode,
                     isFollowed = followedPostcodes?.contains(entity.postcode) ?: false
                 )
@@ -85,7 +84,7 @@ object DashboardUiStateMapper {
 
     suspend fun MutableList<SuburbUiState>.addFollowedSuburbToList(
         postcodeRepo: AuPostcodeRepository,
-        postcode: Long
+        postcode: Int
     ) {
         add(
             SuburbUiState(

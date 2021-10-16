@@ -31,12 +31,12 @@ class SettingsViewModel @Inject constructor(
 
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val myPostcode: LiveData<Long?> =
+    val myPostcode: LiveData<Int?> =
         settingsRepository.getPersonalSettingsFlow().mapNotNull {
             it?.myPostcode
         }.asLiveData(Dispatchers.IO + covidExceptionHandler)
 
-    val followedSuburbs: LiveData<List<Pair<Long, String>>?> =
+    val followedSuburbs: LiveData<List<Pair<Int, String>>?> =
         settingsRepository.getPersonalSettingsFlow().map {
             it?.followedPostcodes?.mapNotNull { postcode ->
                 auPostcodeRepository.getPostcode(postcode)?.suburbs
@@ -63,7 +63,7 @@ class SettingsViewModel @Inject constructor(
     val suburbSuggestions: MutableLiveData<List<String>?> = MutableLiveData(null)
 
     fun setMySuburb(text: String) {
-        val postcode = text.substring(0, 4).toLongOrNull() ?: return
+        val postcode = text.substring(0, 4).toIntOrNull() ?: return
         val suburb = text.substring(5)
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             settingsRepository.saveMyPostcode(
@@ -81,11 +81,11 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun setFollowPostcode(postcode: Long, isFollow: Boolean) {
+    fun setFollowPostcode(postcode: Int, isFollow: Boolean) {
         viewModelScope.launch(Dispatchers.IO + covidExceptionHandler) {
             settingsRepository.getPersonalSettings()?.run {
                 var isChanged = false
-                val newList: MutableList<Long> = mutableListOf()
+                val newList: MutableList<Int> = mutableListOf()
                 newList.addAll(followedPostcodes)
                 if (followedPostcodes.contains(postcode)) {
                     if (!isFollow) {
@@ -153,7 +153,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initialiseAdjacentSuburbs(myPostcode: Long, followed: List<Long>) {
+    private suspend fun initialiseAdjacentSuburbs(myPostcode: Int, followed: List<Int>) {
         adjacentSuburbs.postValue(auPostcodeRepository.getPostcodes(myPostcode, POSTCODE_PICKER_LIST_RADIUS).map { entity ->
             SuburbMultipleSelectionListItem(
                 postcode = entity.postcode,
@@ -164,7 +164,7 @@ class SettingsViewModel @Inject constructor(
         })
     }
 
-    private suspend fun getPostcodeEntityListByNumber(rawString: String, number: Long? = rawString.toLongOrNull()): List<AuPostcodeEntity> =
+    private suspend fun getPostcodeEntityListByNumber(rawString: String, number: Int? = rawString.toIntOrNull()): List<AuPostcodeEntity> =
         number?.let {
             when {
                 rawString.startsWith("00") -> emptyList()

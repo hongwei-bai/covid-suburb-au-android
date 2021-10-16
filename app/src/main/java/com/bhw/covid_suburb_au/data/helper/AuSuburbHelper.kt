@@ -3,10 +3,10 @@ package com.bhw.covid_suburb_au.data.helper
 import com.bhw.covid_suburb_au.data.room.AuSuburbEntity
 
 object AuSuburbHelper {
-    fun toDisplayString(postcode: Long, suburbs: List<AuSuburbEntity>): String? =
+    fun toDisplayString(postcode: Int, suburbs: List<AuSuburbEntity>): String? =
         getSuburbBrief(suburbs.map { it.suburb })?.let { toDisplayString(postcode, it) }
 
-    fun toDisplayString(postcode: Long, suburbName: String?): String = "${postcode.toString().padStart(4, '0')} $suburbName"
+    fun toDisplayString(postcode: Int, suburbName: String?): String = "${postcode.toString().padStart(4, '0')} $suburbName"
 
     fun getSuburbBrief(suburbs: List<String>): String? = when (suburbs.size) {
         0 -> null
