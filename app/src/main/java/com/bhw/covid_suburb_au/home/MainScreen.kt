@@ -10,6 +10,7 @@ import com.bhw.covid_suburb_au.dashboard.Dashboard
 import com.bhw.covid_suburb_au.map.CovidSuburbMap
 import com.bhw.covid_suburb_au.news.News
 import com.bhw.covid_suburb_au.settings.Settings
+import com.bhw.covid_suburb_au.util.PermissionState
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(fineLocation: PermissionState) {
     val coroutineScope = rememberCoroutineScope()
     val pages = listOf(
         Screen.Dashboard,
@@ -39,7 +40,7 @@ fun MainScreen() {
             HorizontalPager(state = pagerState) { page ->
                 when (page) {
                     0 -> Dashboard()
-                    1 -> CovidSuburbMap()
+                    1 -> CovidSuburbMap(fineLocation)
                     2 -> News()
                     3 -> Settings()
                     else -> Unit
