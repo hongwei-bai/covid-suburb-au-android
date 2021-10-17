@@ -15,11 +15,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.ui.theme.CovidTheme
-import com.bhw.covid_suburb_au.util.FusedLocationWrapper
 import com.bhw.covid_suburb_au.util.PermissionState
 import com.bhw.covid_suburb_au.util.checkSelfPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
@@ -42,12 +40,10 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
-                val fusedLocationWrapper = FusedLocationWrapper(LocationServices.getFusedLocationProviderClient(this))
-
                 if (SDK_INT >= Build.VERSION_CODES.S) {
-                    MainScreen(fineLocation, fusedLocationWrapper)
+                    MainScreen(fineLocation)
                 } else {
-                    NavComposeApp(fineLocation, fusedLocationWrapper)
+                    NavComposeApp(fineLocation)
                 }
             }
         }
@@ -72,16 +68,15 @@ fun SystemUiController() {
     }
 }
 
-@InternalCoroutinesApi
 @Composable
-fun NavComposeApp(fineLocation: PermissionState, fusedLocationWrapper: FusedLocationWrapper) {
+fun NavComposeApp(fineLocation: PermissionState) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(navController)
         }
         composable("main") {
-            MainScreen(fineLocation, fusedLocationWrapper)
+            MainScreen(fineLocation)
         }
     }
 }

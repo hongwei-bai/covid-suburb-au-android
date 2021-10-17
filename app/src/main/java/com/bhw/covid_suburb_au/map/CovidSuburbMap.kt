@@ -5,11 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bhw.covid_suburb_au.util.FusedLocationWrapper
+import com.bhw.covid_suburb_au.AppConfigurations.Map.sydneyLocation
 import com.bhw.covid_suburb_au.util.PermissionState
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.model.BitmapDescriptor
@@ -17,19 +20,14 @@ import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.ranges.contains
 
 
-@InternalCoroutinesApi
-@OptIn(ExperimentalCoroutinesApi::class)
 @SuppressLint("MissingPermission")
 @Composable
-fun CovidSuburbMap(fineLocation: PermissionState, fusedLocationWrapper: FusedLocationWrapper) {
+fun CovidSuburbMap(fineLocation: PermissionState) {
     val viewModel = hiltViewModel<MapViewModel>()
 
     val homeLocationUiState = viewModel.homeLocation.observeAsState().value
@@ -39,13 +37,7 @@ fun CovidSuburbMap(fineLocation: PermissionState, fusedLocationWrapper: FusedLoc
     val lgaList = viewModel.lgaWithCases.observeAsState().value
 
     val hasLocationPermission by fineLocation.hasPermission.collectAsState()
-    if (hasLocationPermission) {
-        LaunchedEffect(fusedLocationWrapper) {
-            fusedLocationWrapper.lastLocation().collect {
-                viewModel.setLocation(LatLng(it.latitude, it.longitude))
-            }
-        }
-    } else {
+    if (!hasLocationPermission) {
         fineLocation.launchPermissionRequest()
     }
 
@@ -64,10 +56,8 @@ fun CovidSuburbMap(fineLocation: PermissionState, fusedLocationWrapper: FusedLoc
                     homeLocationUiState.latLng.latitude,
                     homeLocationUiState.latLng.longitude
                 )
-            } else if (hasLocationPermission && currentLocationUiState != null) {
-                LatLng(currentLocationUiState.latitude, currentLocationUiState.longitude)
             } else {
-                LatLng(-33.8678, 151.2073)
+                sydneyLocation
             }
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f))
 
