@@ -1,18 +1,15 @@
 package com.bhw.covid_suburb_au.map
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
-import androidx.annotation.ColorRes
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bhw.covid_suburb_au.R
+import com.bhw.covid_suburb_au.util.FusedLocationWrapper
 import com.bhw.covid_suburb_au.util.PermissionState
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.model.BitmapDescriptor
@@ -20,30 +17,42 @@ import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.awaitMap
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import kotlin.ranges.contains
 
 
+@InternalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 @SuppressLint("MissingPermission")
 @Composable
-fun CovidSuburbMap(fineLocation: PermissionState) {
+fun CovidSuburbMap(fineLocation: PermissionState, fusedLocationWrapper: FusedLocationWrapper) {
     val viewModel = hiltViewModel<MapViewModel>()
 
     val homeLocationUiState = viewModel.homeLocation.observeAsState().value
 
+    val currentLocationUiState = viewModel.currentLocation.observeAsState().value
+
     val lgaList = viewModel.lgaWithCases.observeAsState().value
 
     val hasLocationPermission by fineLocation.hasPermission.collectAsState()
-
-    if (!hasLocationPermission) {
+    if (hasLocationPermission) {
+        LaunchedEffect(fusedLocationWrapper) {
+            fusedLocationWrapper.lastLocation().collect {
+                viewModel.setLocation(LatLng(it.latitude, it.longitude))
+            }
+        }
+    } else {
         fineLocation.launchPermissionRequest()
     }
 
     val coroutineScope = rememberCoroutineScope()
+    val mapView1 = rememberMapViewWithLifecycle()
 
-    val mapView = rememberMapViewWithLifecycle()
-
-    AndroidView({ mapView }) { mapView ->
+    AndroidView({ mapView1 }) { mapView ->
         coroutineScope.launch {
             val map = mapView.awaitMap()
 
@@ -55,10 +64,8 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
                     homeLocationUiState.latLng.latitude,
                     homeLocationUiState.latLng.longitude
                 )
-            } else if (hasLocationPermission) {
-//                val myLocation: Location = map.myLocation
-//                LatLng(myLocation.latitude, myLocation.longitude)
-                LatLng(-33.8678, 151.2073)
+            } else if (hasLocationPermission && currentLocationUiState != null) {
+                LatLng(currentLocationUiState.latitude, currentLocationUiState.longitude)
             } else {
                 LatLng(-33.8678, 151.2073)
             }
@@ -76,20 +83,6 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
             }
         }
     }
-}
-
-fun textAsBitmap(text: String, textSize: Float, textColor: Int): Bitmap? {
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    paint.textSize = textSize
-    paint.color = textColor
-
-    val baseline: Float = -paint.ascent()
-    val width = (paint.measureText(text) + 0.5f).roundToInt()
-    val height = (baseline + paint.descent() + 0.5f).roundToInt()
-    val image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(image)
-    canvas.drawText(text, 0f, baseline, paint)
-    return image
 }
 
 fun bitmapDescriptorFromVector(number: Long): BitmapDescriptor? {

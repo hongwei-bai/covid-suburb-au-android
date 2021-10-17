@@ -1,6 +1,9 @@
 package com.bhw.covid_suburb_au.map
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.bhw.covid_suburb_au.common.ExceptionHelper.covidExceptionHandler
 import com.bhw.covid_suburb_au.data.AuPostcodeRepository
 import com.bhw.covid_suburb_au.data.MobileCovidRepository
@@ -20,6 +23,8 @@ class MapViewModel @Inject constructor(
     private val mobileCovidRepository: MobileCovidRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
+    var currentLocation = MutableLiveData<LatLng>()
+
     val homeLocation = settingsRepository.getPersonalSettingsFlow()
         .map { settings ->
             settings?.myPostcode?.let {
@@ -53,5 +58,9 @@ class MapViewModel @Inject constructor(
             }
             lgaWithCases.postValue(list)
         }
+    }
+
+    fun setLocation(location: LatLng) {
+        currentLocation.value = location
     }
 }

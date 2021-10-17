@@ -1,5 +1,7 @@
 package com.bhw.covid_suburb_au
 
+import com.google.android.libraries.maps.model.LatLng
+
 object AppConfigurations {
     object Network {
         const val HTTP_READ_TIMEOUT = 15_000L
@@ -28,5 +30,9 @@ object AppConfigurations {
         const val STATE_HIGHLIGHT_THRESHOLD = 100
 
         const val SUBURB_HIGHLIGHT_THRESHOLD = 10
+    }
+
+    object Map {
+        val sydneyLocation = LatLng(-33.8678, 151.2073)
     }
 }

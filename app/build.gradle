@@ -108,7 +108,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version_for_ide"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1")
 
     // Android
     implementation "androidx.core:core-ktx:1.6.0"
