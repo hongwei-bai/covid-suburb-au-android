@@ -1,6 +1,7 @@
 package com.bhw.covid_suburb_au.dashboard
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,14 +27,16 @@ import com.bhw.covid_suburb_au.dashboard.viewmodel.SuburbUiState
 import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
 
 @Composable
-fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onExpandButtonClicked: () -> Unit) {
+fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onSuburbClicked: (Int) -> Unit, onExpandButtonClicked: () -> Unit) {
     LazyColumn {
         item {
             Text(
                 text = stringResource(id = R.string.suburb_list_title),
                 color = MaterialTheme.colors.onPrimary,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, bottom = 16.dp)
             )
         }
         items(items = data, key = { it.postcode }) {
@@ -42,7 +45,8 @@ fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onExpandButtonCli
                 modifier = Modifier
                     .padding(start = 16.dp, end = 24.dp)
                     .height(36.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable { onSuburbClicked.invoke(it.postcode) },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 val iconRes = when {

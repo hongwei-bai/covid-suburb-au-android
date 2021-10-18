@@ -1,27 +1,32 @@
 package com.bhw.covid_suburb_au.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bhw.covid_suburb_au.dashboard.Dashboard
 import com.bhw.covid_suburb_au.map.CovidSuburbMap
+import com.bhw.covid_suburb_au.map.MapViewModel
 import com.bhw.covid_suburb_au.news.News
 import com.bhw.covid_suburb_au.settings.Settings
 import com.bhw.covid_suburb_au.util.PermissionState
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
+@InternalCoroutinesApi
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MainScreen(fineLocation: PermissionState) {
+    val mapViewModel = hiltViewModel<MapViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val pages = listOf(
         Screen.Dashboard,
@@ -30,33 +35,34 @@ fun MainScreen(fineLocation: PermissionState) {
         Screen.Settings
     )
     val pagerState = rememberPagerState(pages.size)
-    object : PagerListener {
-        override fun onBackToDashboard() {
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(0)
-            }
-        }
-    }
     val enableScrolling = remember { mutableStateOf(true) }
     Scaffold(bottomBar = { BottomNavBar(pagerState) }) { innerPadding ->
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                if (page != Screen.Map.id) {
+                    mapViewModel.clickedLocation = null
+                }
+            }
+        }
         Box(modifier = Modifier.padding(innerPadding)) {
             HorizontalPager(
                 state = pagerState,
                 dragEnabled = enableScrolling.value
             ) { page ->
-                enableScrolling.value = page == 1
+                enableScrolling.value = page == Screen.Map.id
                 when (page) {
-                    0 -> Dashboard()
-                    1 -> CovidSuburbMap(fineLocation)
-                    2 -> News()
-                    3 -> Settings()
+                    Screen.Dashboard.id -> Dashboard { postcode ->
+                        mapViewModel.setClickedLocation(postcode)
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(Screen.Map.id)
+                        }
+                    }
+                    Screen.Map.id -> CovidSuburbMap(fineLocation)
+                    Screen.News.id -> News()
+                    Screen.Settings.id -> Settings()
                     else -> Unit
                 }
             }
         }
     }
-}
-
-interface PagerListener {
-    fun onBackToDashboard()
 }

@@ -20,7 +20,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
-fun Dashboard() {
+fun Dashboard(onSuburbClicked: (Int) -> Unit) {
     val viewModel = hiltViewModel<DashboardViewModel>()
     val basicUiState = viewModel.basicUiState.observeAsState().value
 
@@ -52,7 +52,8 @@ fun Dashboard() {
                     if (suburbUiState?.isNotEmpty() == true) {
                         SuburbsBoard(
                             data = suburbUiState,
-                            isCompat = isShowCompatList
+                            isCompat = isShowCompatList,
+                            onSuburbClicked = onSuburbClicked
                         ) {
                             viewModel.query(!isShowCompatList)
                         }

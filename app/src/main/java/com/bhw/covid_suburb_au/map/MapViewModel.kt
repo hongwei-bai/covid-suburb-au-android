@@ -23,6 +23,8 @@ class MapViewModel @Inject constructor(
     private val mobileCovidRepository: MobileCovidRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
+    var clickedLocation: LatLng? = null
+
     val homeLocation = settingsRepository.getPersonalSettingsFlow()
         .map { settings ->
             settings?.myPostcode?.let {
@@ -37,6 +39,14 @@ class MapViewModel @Inject constructor(
         }.asLiveData(viewModelScope.coroutineContext + covidExceptionHandler)
 
     val lgaWithCases = MutableLiveData<List<LgaUiState>>()
+
+    fun setClickedLocation(postcode: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            clickedLocation = auPostcodeRepository.getPostcode(postcode)?.suburbs?.firstOrNull()?.let {
+                LatLng(it.latitude, it.longitude)
+            }
+        }
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

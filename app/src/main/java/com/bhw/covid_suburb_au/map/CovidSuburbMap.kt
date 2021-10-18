@@ -49,13 +49,14 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
             map.isMyLocationEnabled = hasLocationPermission
             map.uiSettings.isZoomControlsEnabled = true
 
-            val currentLocation = if (homeLocationUiState is MapLocationUiState.Location) {
-                LatLng(
+            val clickedLocation = viewModel.clickedLocation
+            val currentLocation = when {
+                clickedLocation != null -> clickedLocation
+                homeLocationUiState is MapLocationUiState.Location -> LatLng(
                     homeLocationUiState.latLng.latitude,
                     homeLocationUiState.latLng.longitude
                 )
-            } else {
-                sydneyLocation
+                else -> sydneyLocation
             }
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f))
 
