@@ -79,13 +79,14 @@ fun AusMapView(data: CasesByStateViewObject) {
                 StateBoard(
                     data = data.nsw,
                     modifier = Modifier
-                        .weight(0.15f)
-                        .fillMaxHeight()
+                        .weight(0.3f)
+                        .fillMaxHeight(),
+                    horizontalArrangement = Arrangement.Start
                 )
                 Spacer(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .weight(0.2f)
+                        .weight(0.05f)
                 )
             }
             Row(

@@ -34,6 +34,8 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
 
     val lgaList = viewModel.lgaWithCases.observeAsState().value
 
+    val clickedLocation = viewModel.clickedLocation.observeAsState().value
+
     val hasLocationPermission by fineLocation.hasPermission.collectAsState()
     if (!hasLocationPermission) {
         fineLocation.launchPermissionRequest()
@@ -49,7 +51,6 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
             map.isMyLocationEnabled = hasLocationPermission
             map.uiSettings.isZoomControlsEnabled = true
 
-            val clickedLocation = viewModel.clickedLocation
             val currentLocation = when {
                 clickedLocation != null -> clickedLocation
                 homeLocationUiState is MapLocationUiState.Location -> LatLng(

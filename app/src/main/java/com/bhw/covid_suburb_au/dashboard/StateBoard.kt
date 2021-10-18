@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.bhw.covid_suburb_au.R
-import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
 import com.bhw.covid_suburb_au.dashboard.viewmodel.StateItemViewObject
+import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
 
 @Composable
 fun StateBoard(data: StateItemViewObject, modifier: Modifier = Modifier, horizontalArrangement: Arrangement.Horizontal? = null) {
