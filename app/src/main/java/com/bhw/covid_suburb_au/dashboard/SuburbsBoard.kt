@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -27,6 +28,14 @@ import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
 @Composable
 fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onExpandButtonClicked: () -> Unit) {
     LazyColumn {
+        item {
+            Text(
+                text = stringResource(id = R.string.suburb_list_title),
+                color = MaterialTheme.colors.onPrimary,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, bottom = 16.dp)
+            )
+        }
         items(items = data, key = { it.postcode }) {
             val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.map_pin2))
             Row(

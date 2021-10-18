@@ -99,9 +99,16 @@ class DashboardViewModel @Inject constructor(
                     }
                 }
             }
+            val isSuburbConfigured = settings?.mySuburb != null
             if (compatList) {
-                val compactList = fullList.filterIndexed { index, item ->
-                    index < TOP || item.isFollowed || item.isMySuburb
+                val compactList = if (isSuburbConfigured) {
+                    fullList.filterIndexed { _, item ->
+                        item.isMySuburb || item.isFollowed
+                    }
+                } else {
+                    fullList.filterIndexed { index, item ->
+                        index < TOP || item.isFollowed
+                    }
                 }
                 _suburbUiState.postValue(compactList)
             } else {
