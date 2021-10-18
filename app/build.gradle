@@ -167,6 +167,7 @@ dependencies {
     // Animation and Image loading
     implementation "com.airbnb.android:lottie:$lottie_version"
     implementation "com.airbnb.android:lottie-compose:$lottie_compose_version"
+    implementation("io.coil-kt:coil-compose:$coil_compose_version")
 
     // System utilities
     implementation "com.jakewharton.timber:timber:4.7.1"

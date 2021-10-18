@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.bhw.covid_suburb_au.dashboard.Dashboard
@@ -35,9 +37,14 @@ fun MainScreen(fineLocation: PermissionState) {
             }
         }
     }
+    val enableScrolling = remember { mutableStateOf(true) }
     Scaffold(bottomBar = { BottomNavBar(pagerState) }) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            HorizontalPager(state = pagerState) { page ->
+            HorizontalPager(
+                state = pagerState,
+                dragEnabled = enableScrolling.value
+            ) { page ->
+                enableScrolling.value = page == 1
                 when (page) {
                     0 -> Dashboard()
                     1 -> CovidSuburbMap(fineLocation)

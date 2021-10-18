@@ -47,7 +47,7 @@ fun Dashboard() {
                 is BasicUiState.Success -> {
                     DataStatusSnackBar(basicUiState.lastUpdate)
                     Spacer(modifier = Modifier.height(16.dp))
-                    StatesBoard(basicUiState.dataByState)
+                    AusMapView(basicUiState.dataByState)
                     Spacer(modifier = Modifier.height(8.dp))
                     if (suburbUiState?.isNotEmpty() == true) {
                         SuburbsBoard(

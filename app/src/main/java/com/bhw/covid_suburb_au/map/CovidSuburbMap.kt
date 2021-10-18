@@ -32,8 +32,6 @@ fun CovidSuburbMap(fineLocation: PermissionState) {
 
     val homeLocationUiState = viewModel.homeLocation.observeAsState().value
 
-    val currentLocationUiState = viewModel.currentLocation.observeAsState().value
-
     val lgaList = viewModel.lgaWithCases.observeAsState().value
 
     val hasLocationPermission by fineLocation.hasPermission.collectAsState()
