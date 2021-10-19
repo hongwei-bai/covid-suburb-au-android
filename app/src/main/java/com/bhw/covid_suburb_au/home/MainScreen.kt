@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bhw.covid_suburb_au.AppConfigurations.Cache.RETAIN_ALL_TABS_DURING_APP_ALIVE
 import com.bhw.covid_suburb_au.dashboard.Dashboard
 import com.bhw.covid_suburb_au.map.CovidSuburbMap
 import com.bhw.covid_suburb_au.map.MapViewModel
@@ -35,7 +36,10 @@ fun MainScreen(fineLocation: PermissionState) {
         Screen.News,
         Screen.Settings
     )
-    val pagerState = rememberPagerState(pages.size)
+    val pagerState = rememberPagerState(
+        pageCount = pages.size,
+        initialOffscreenLimit = RETAIN_ALL_TABS_DURING_APP_ALIVE
+    )
     Scaffold(bottomBar = { BottomNavBar(pagerState) }) { innerPadding ->
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -50,12 +54,19 @@ fun MainScreen(fineLocation: PermissionState) {
                 dragEnabled = false
             ) { page ->
                 when (page) {
-                    Screen.Dashboard.id -> Dashboard { postcode ->
-                        mapViewModel.clickedPostcode = postcode
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(Screen.Map.id)
+                    Screen.Dashboard.id -> Dashboard(
+                        onGoToSettings = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(Screen.Settings.id)
+                            }
+                        },
+                        onSuburbClicked = { postcode ->
+                            mapViewModel.clickedPostcode = postcode
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(Screen.Map.id)
+                            }
                         }
-                    }
+                    )
                     Screen.Map.id -> CovidSuburbMap(fineLocation)
                     Screen.News.id -> News()
                     Screen.Settings.id -> Settings()

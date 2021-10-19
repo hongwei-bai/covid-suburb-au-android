@@ -41,6 +41,15 @@ fun Settings() {
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
+                text = stringResource(R.string.state_limitation_message),
+                style = MaterialTheme.typography.overline,
+                color = MaterialTheme.colors.onSecondary,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            Text(
                 text = stringResource(id = R.string.settings),
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onPrimary,
@@ -51,6 +60,11 @@ fun Settings() {
             SuburbSetting()
             Spacer(modifier = Modifier.size(16.dp))
             FollowedSuburbsSetting()
+
+            Spacer(modifier = Modifier.size(24.dp))
+            AboutView()
+            Spacer(modifier = Modifier.size(24.dp))
+            DeveloperView()
         }
     }
 }

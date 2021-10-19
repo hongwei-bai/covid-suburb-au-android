@@ -37,6 +37,21 @@ class LocalDateTimeUtilTest {
         assertEquals(true, actualResult)
     }
 
+    @Test
+    fun testDataVersion() {
+        val dataVersion = 2021101910
+        val date = LocalDateTimeUtil.parseDataVersion(dataVersion.toString())
+        val actualResult = Calendar.getInstance().apply { time = date }
+        val expectResult = getCalendarInstance(2021, Calendar.OCTOBER, 19, 10, 0, 0)
+        assertEquals(expectResult, actualResult)
+        assertEquals(expectResult.get(Calendar.YEAR), actualResult.get(Calendar.YEAR))
+        assertEquals(expectResult.get(Calendar.DAY_OF_YEAR), actualResult.get(Calendar.DAY_OF_YEAR))
+        assertEquals(expectResult.get(Calendar.HOUR_OF_DAY), actualResult.get(Calendar.HOUR_OF_DAY))
+        assertEquals(expectResult.get(Calendar.MINUTE), actualResult.get(Calendar.MINUTE))
+        assertEquals(expectResult.get(Calendar.SECOND), actualResult.get(Calendar.SECOND))
+        assertEquals(expectResult.get(Calendar.MILLISECOND), actualResult.get(Calendar.MILLISECOND))
+    }
+
     companion object {
         private fun getCalendarInstance(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) =
             Calendar.getInstance().apply {

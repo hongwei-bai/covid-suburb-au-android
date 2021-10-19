@@ -114,8 +114,7 @@ class SettingsViewModel @Inject constructor(
             val list = myPostcode?.let {
                 when {
                     inputString.isEmpty() -> auPostcodeRepository.getPostcodes(myPostcode, POSTCODE_PICKER_LIST_RADIUS)
-                    inputString.toLongOrNull() != null -> getPostcodeEntityListByNumber(inputString)
-                    else -> emptyList()
+                    else -> getPostcodeEntityListByNumber(inputString)
                 }
             }?.map { entity ->
                 SuburbMultipleSelectionListItem(
@@ -179,6 +178,7 @@ class SettingsViewModel @Inject constructor(
                     else -> emptyList()
                 }
             }
+            // TODO support name searching by replace with getPostcodesByName(), but need to use flow to take text input.
         } ?: emptyList()
 
     private fun isAccurateMatch(rawString: String, number: Long? = rawString.toLongOrNull()): Boolean =

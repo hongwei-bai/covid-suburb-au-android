@@ -14,6 +14,9 @@ interface AuPostcodeDao {
     @Query("SELECT * FROM au_postcode WHERE postcode>=:low AND postcode<=:high")
     suspend fun findPostcodesInRange(low: Int, high: Int): List<AuPostcodeEntity>
 
+    @Query("SELECT * FROM au_postcode WHERE indexingString LIKE '%' || :search || '%'")
+    fun findPostcodeByName(search: String?): List<AuPostcodeEntity>
+
     @Query("DELETE FROM au_postcode")
     suspend fun clear()
 

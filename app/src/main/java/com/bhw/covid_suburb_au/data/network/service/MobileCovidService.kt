@@ -1,6 +1,7 @@
 package com.bhw.covid_suburb_au.data.network.service
 
 import com.bhw.covid_suburb_au.data.network.model.MobileCovidAuRawResponse
+import com.bhw.covid_suburb_au.data.network.model.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,4 +12,7 @@ interface MobileCovidService {
         @Query("dataVersion") dataVersion: Long = -1,
         @Query("followedSuburbs") followedSuburbs: String? = null
     ): Response<MobileCovidAuRawResponse>
+
+    @GET("news.do")
+    suspend fun getNews(): Response<NewsResponse>
 }

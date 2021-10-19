@@ -17,7 +17,9 @@ data class CovidAuEntity(
     @SerializedName("caseByState")
     var caseByState: List<CovidAuCaseByStateEntity> = emptyList(),
     @SerializedName("caseByLga")
-    var caseByLga: List<CovidAuCaseByLgaEntity> = emptyList()
+    var caseByLga: List<CovidAuCaseByLgaEntity> = emptyList(),
+    @SerializedName("lgaCaseReport")
+    var lgaCaseReport: List<LGACaseReport> = emptyList()
 )
 
 data class CovidAuCaseByStateEntity(
@@ -32,4 +34,13 @@ data class CovidAuCaseByLgaEntity(
     val postcode: Int = 0,
     @SerializedName("newCases")
     val newCases: Long = 0
+)
+
+data class LGACaseReport(
+    @SerializedName("state")
+    val state: String = "",
+    @SerializedName("lastUpdate")
+    val lastUpdate: Long? = null,
+    @SerializedName("reportDate")
+    val reportDate: Long = 0
 )

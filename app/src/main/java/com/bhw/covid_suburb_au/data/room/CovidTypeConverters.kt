@@ -7,6 +7,18 @@ import java.lang.reflect.Type
 
 object CovidTypeConverters {
     @TypeConverter
+    fun fromStringToLGACaseReport(value: String?): List<LGACaseReport>? {
+        val listType: Type = object : TypeToken<List<LGACaseReport>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromLGACaseReport(list: List<LGACaseReport>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
     fun fromStringToMobileCovidAuCaseByStateEntity(value: String?): List<CovidAuCaseByStateEntity>? {
         val listType: Type = object : TypeToken<List<CovidAuCaseByStateEntity>?>() {}.type
         return Gson().fromJson(value, listType)

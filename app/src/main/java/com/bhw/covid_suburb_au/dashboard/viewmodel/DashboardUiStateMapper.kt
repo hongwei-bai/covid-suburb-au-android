@@ -9,15 +9,27 @@ import com.bhw.covid_suburb_au.data.room.CovidAuCaseByStateEntity
 import com.bhw.covid_suburb_au.data.room.CovidAuEntity
 import com.bhw.covid_suburb_au.data.room.SettingsEntity
 import com.bhw.covid_suburb_au.data.util.Resource
+import com.bhw.covid_suburb_au.util.LocalDateTimeUtil.getLocalDateTimeDisplay
+import com.bhw.covid_suburb_au.util.LocalDateTimeUtil.parseDataVersion
+import java.util.*
 
 object DashboardUiStateMapper {
     fun Resource<CovidAuEntity>.mapToUiState(myState: String?): BasicUiState = when (this) {
         is Resource.Loading -> BasicUiState.Loading
         is Resource.Success -> data.mapToUiState(myState)?.let {
-            BasicUiState.Success(data.dataVersion.toString(), it)
+            BasicUiState.Success(data.dataVersion.toLocalDateTime(), it)
         } ?: BasicUiState.Error
         is Resource.Error -> BasicUiState.Error
     }
+
+    private fun Long.toLocalDateTime(): String =
+        if (this > 0) {
+            parseDataVersion(toString())?.let {
+                Calendar.getInstance().apply { time = it }
+            }?.let {
+                getLocalDateTimeDisplay(it)
+            } ?: toString()
+        } else toString()
 
     private fun CovidAuEntity.mapToUiState(myState: String?): CasesByStateViewObject? =
         caseByState.run {

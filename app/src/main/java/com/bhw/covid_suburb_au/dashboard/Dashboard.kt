@@ -20,7 +20,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
-fun Dashboard(onSuburbClicked: (Int) -> Unit) {
+fun Dashboard(onGoToSettings: () -> Unit, onSuburbClicked: (Int) -> Unit) {
     val viewModel = hiltViewModel<DashboardViewModel>()
     val basicUiState = viewModel.basicUiState.observeAsState().value
 
@@ -32,6 +32,7 @@ fun Dashboard(onSuburbClicked: (Int) -> Unit) {
         val isShowCompatList = viewModel.isCompatList.observeAsState().value ?: true
         val suburbUiState = viewModel.suburbUiState.observeAsState().value
         val isSuburbConfigured by viewModel.isSuburbConfigured.observeAsState()
+        val suburbLastUpdate by viewModel.suburbLastUpdate.observeAsState()
 
         if (isPostcodeInitialised == false) {
             InitialisationDialog()
@@ -46,11 +47,12 @@ fun Dashboard(onSuburbClicked: (Int) -> Unit) {
                 is BasicUiState.Error -> ErrorView { viewModel.refresh() }
                 is BasicUiState.Success -> {
                     DataStatusSnackBar(basicUiState.lastUpdate)
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                     AusMapView(basicUiState.dataByState)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     if (suburbUiState?.isNotEmpty() == true) {
                         SuburbsBoard(
+                            lastUpdate = suburbLastUpdate,
                             data = suburbUiState,
                             isCompat = isShowCompatList,
                             onSuburbClicked = onSuburbClicked
@@ -59,7 +61,7 @@ fun Dashboard(onSuburbClicked: (Int) -> Unit) {
                         }
                     }
                     if (isSuburbConfigured == false) {
-                        SuburbUnconfiguredMessageView()
+                        SuburbUnConfiguredMessageView(onGoToSettings)
                     }
                 }
             }

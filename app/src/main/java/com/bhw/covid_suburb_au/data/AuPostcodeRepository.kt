@@ -1,6 +1,7 @@
 package com.bhw.covid_suburb_au.data
 
 import android.content.Context
+import com.bhw.covid_suburb_au.AppConfigurations.Configuration.POSTCODE_SEARCH_RESULT_LIMIT
 import com.bhw.covid_suburb_au.data.model.AuPostcodeSource
 import com.bhw.covid_suburb_au.data.room.AuPostcodeDao
 import com.bhw.covid_suburb_au.data.room.AuPostcodeEntity
@@ -37,6 +38,9 @@ class AuPostcodeRepository @Inject constructor(
     suspend fun getPostcodes(postcode: Int, radius: Int): List<AuPostcodeEntity> =
         auPostcodeDao.findPostcodesInRange(postcode - radius, postcode + radius)
 
+    fun getPostcodesByName(search: String): List<AuPostcodeEntity> =
+        auPostcodeDao.findPostcodeByName(search).subList(0, POSTCODE_SEARCH_RESULT_LIMIT)
+
     suspend fun checkIsInitialised(): Boolean = auPostcodeDao.getAllPostcodes().size == 3312
 
     suspend fun initialize(): Boolean {
@@ -48,11 +52,12 @@ class AuPostcodeRepository @Inject constructor(
             val list = postcodeToInfoMap.value
             AuPostcodeEntity(
                 postcode = postcodeToInfoMap.key,
+                stateCode = list.first().state_code,
+                state = list.first().state_name,
+                indexingString = postcodeToInfoMap.value.joinToString(",") { it.place_name },
                 suburbs = list.map {
                     AuSuburbEntity(
                         suburb = it.place_name,
-                        stateCode = it.state_code,
-                        state = it.state_name,
                         longitude = it.longitude,
                         latitude = it.latitude,
                         accuracy = it.accuracy

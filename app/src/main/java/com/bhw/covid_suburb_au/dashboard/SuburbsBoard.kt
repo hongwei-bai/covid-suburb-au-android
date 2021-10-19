@@ -27,12 +27,15 @@ import com.bhw.covid_suburb_au.dashboard.viewmodel.SuburbUiState
 import com.bhw.covid_suburb_au.data.helper.CovidDisplayHelper
 
 @Composable
-fun SuburbsBoard(data: List<SuburbUiState>, isCompat: Boolean, onSuburbClicked: (Int) -> Unit, onExpandButtonClicked: () -> Unit) {
+fun SuburbsBoard(lastUpdate: String?, data: List<SuburbUiState>, isCompat: Boolean, onSuburbClicked: (Int) -> Unit, onExpandButtonClicked: () -> Unit) {
     LazyColumn {
         item {
             Text(
-                text = stringResource(id = R.string.suburb_list_title),
+                text = lastUpdate?.let {
+                    stringResource(id = R.string.suburb_list_title, lastUpdate)
+                } ?: stringResource(id = R.string.suburb_list_title_no_date),
                 color = MaterialTheme.colors.onPrimary,
+                style = MaterialTheme.typography.subtitle2,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .fillMaxWidth()

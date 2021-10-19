@@ -21,120 +21,132 @@ fun AusMapView(data: CasesByStateViewObject) {
     } else {
         Color.White
     }
-    Box(
-        contentAlignment = Alignment.Center,
+    Row(
+        horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .height(240.dp)
             .background(backgroundColor)
     ) {
-        Image(
-            painter = painterResource(R.drawable.map_au),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .fillMaxHeight()
-        )
+                .width(360.dp)
+                .height(240.dp)
+        ) {
+            Image(
+                painter = painterResource(R.drawable.map_au),
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier
+                    .fillMaxHeight()
+            )
 
-        Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.15f)
-            ) {
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.12f),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                StateBoard(data.nt)
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.12f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                StateBoard(data.wa)
-                StateBoard(data.qld)
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.2f)
-            ) {
-                Spacer(
+            Column {
+                Row(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.40f)
-                )
-                StateBoard(
-                    data = data.sa,
-                    modifier = Modifier.weight(0.2f)
-                )
-                StateBoard(
-                    data = data.nsw,
+                        .fillMaxWidth()
+                        .weight(0.15f)
+                ) {
+                }
+                Row(
                     modifier = Modifier
-                        .weight(0.3f)
-                        .fillMaxHeight(),
-                    horizontalArrangement = Arrangement.Start
-                )
-                Spacer(
+                        .fillMaxWidth()
+                        .weight(0.12f),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    StateBoard(data.nt)
+                }
+                Row(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.05f)
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)
-            ) {
-                Spacer(
+                        .fillMaxWidth()
+                        .weight(0.12f),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    StateBoard(data.wa)
+                    StateBoard(data.qld)
+                }
+                Row(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.6f)
-                )
-                StateBoard(
-                    data.vic, modifier = Modifier
-                        .fillMaxHeight()
+                        .fillMaxWidth()
                         .weight(0.2f)
-                )
-                StateBoard(
-                    data.act,
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.40f)
+                    )
+                    StateBoard(
+                        data = data.sa,
+                        modifier = Modifier.weight(0.2f)
+                    )
+                    StateBoard(
+                        data = data.nsw,
+                        modifier = Modifier
+                            .weight(0.3f)
+                            .fillMaxHeight(),
+                        horizontalArrangement = Arrangement.Start
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.05f)
+                    )
+                }
+                Row(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.2f),
-                    horizontalArrangement = Arrangement.Start
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)
-            ) {
-                Spacer(
+                        .fillMaxWidth()
+                        .weight(0.1f)
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.4f)
+                    )
+                    StateBoard(
+                        data.vic, modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.37f),
+                        horizontalArrangement = Arrangement.End
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.03f)
+                    )
+                    StateBoard(
+                        data.act,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.20f),
+                        horizontalArrangement = Arrangement.Start
+                    )
+                }
+                Row(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.6f)
-                )
-                StateBoard(
-                    data.tas,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.2f)
-                )
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(0.2f)
-                )
+                        .fillMaxWidth()
+                        .weight(0.1f)
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.6f)
+                    )
+                    StateBoard(
+                        data.tas,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.2f)
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(0.2f)
+                    )
+                }
             }
         }
     }
-
 }

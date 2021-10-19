@@ -13,12 +13,14 @@ import com.bhw.covid_suburb_au.data.SettingsRepository
 import com.bhw.covid_suburb_au.data.room.CovidAuEntity
 import com.bhw.covid_suburb_au.data.room.SettingsEntity
 import com.bhw.covid_suburb_au.data.util.Resource
+import com.bhw.covid_suburb_au.util.LocalDateTimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +32,10 @@ class DashboardViewModel @Inject constructor(
     private val _basicUiState = MutableLiveData<BasicUiState>()
 
     val basicUiState: LiveData<BasicUiState> = _basicUiState
+
+    private val _suburbLastUpdate = MutableLiveData<String?>()
+
+    val suburbLastUpdate: LiveData<String?> = _suburbLastUpdate
 
     private val _suburbUiState = MutableLiveData<List<SuburbUiState>>()
 
@@ -87,6 +93,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private suspend fun updateSuburbUi(settings: SettingsEntity?, resource: Resource<CovidAuEntity>, compatList: Boolean) {
+        var suburbLastUpdateString: String? = null
         if (resource is Resource.Success<CovidAuEntity>) {
             val fullList = getSuburbList(settings, resource.data, auPostcodeRepository)
             settings?.let {
@@ -114,6 +121,20 @@ class DashboardViewModel @Inject constructor(
             } else {
                 _suburbUiState.postValue(fullList)
             }
+            _suburbLastUpdate.postValue(getCaseReportDate(settings, resource))
+        }
+    }
+
+    private fun getCaseReportDate(settings: SettingsEntity?, resource: Resource.Success<CovidAuEntity>): String? {
+        val caseReportDate = resource.data.lgaCaseReport.filterIndexed { index, lgaCaseReport ->
+            settings?.myState?.let { myState ->
+                myState == lgaCaseReport.state
+            } ?: index == 0
+        }.firstOrNull()?.reportDate
+        return caseReportDate?.let {
+            LocalDateTimeUtil.getLocalDateDisplay(Calendar.getInstance().apply {
+                timeInMillis = caseReportDate
+            })
         }
     }
 }

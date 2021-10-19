@@ -11,6 +11,15 @@ data class AuPostcodeEntity(
     @SerializedName("postcode")
     val postcode: Int = 0,
 
+    @SerializedName("indexingString")
+    val indexingString: String = "",
+
+    @SerializedName("state")
+    val state: String = "",
+
+    @SerializedName("stateCode")
+    val stateCode: String = "",
+
     @SerializedName("suburbs")
     val suburbs: List<AuSuburbEntity> = emptyList()
 )
@@ -18,12 +27,6 @@ data class AuPostcodeEntity(
 data class AuSuburbEntity(
     @SerializedName("suburb")
     val suburb: String = "",
-
-    @SerializedName("state")
-    val state: String = "",
-
-    @SerializedName("state_code")
-    val stateCode: String = "",
 
     @SerializedName("latitude")
     val latitude: Double = 0.0,

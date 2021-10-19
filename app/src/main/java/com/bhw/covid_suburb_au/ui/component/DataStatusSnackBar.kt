@@ -16,7 +16,7 @@ fun DataStatusSnackBar(lastUpdate: String?) {
     Row(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
-            .padding(8.dp)
+            .padding(2.dp)
     ) {
         Text(
             text = lastUpdate?.let {
