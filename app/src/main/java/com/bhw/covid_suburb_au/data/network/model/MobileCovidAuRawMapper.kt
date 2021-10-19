@@ -5,7 +5,6 @@ import com.bhw.covid_suburb_au.data.room.CovidAuCaseByLgaEntity
 import com.bhw.covid_suburb_au.data.room.CovidAuCaseByStateEntity
 import com.bhw.covid_suburb_au.data.room.CovidAuEntity
 import com.bhw.covid_suburb_au.data.room.LGACaseReport
-import com.bhw.covid_suburb_au.util.LocalDateTimeUtil
 
 object MobileCovidAuRawMapper {
     fun MobileCovidAuRawResponse.mapToEntity(): CovidAuEntity =
@@ -31,7 +30,7 @@ object MobileCovidAuRawMapper {
             lgaCaseReport = lgaData.map {
                 LGACaseReport(
                     state = it.state,
-                    lastUpdate = LocalDateTimeUtil.parseNSWDate(it.lastUpdate)?.time,
+                    lastUpdate = it.lastUpdate?.toLongOrNull(),
                     reportDate = it.lastRecordTimeStamp
                 )
             }
