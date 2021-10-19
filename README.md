@@ -2,6 +2,8 @@
 
 [![Build Status](https://hongwei-test1.top:8444/buildStatus/icon?job=covid-app-android)](https://hongwei-test1.top:8444/job/covid-app-android/)
 
+<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/feature.png" width="512" height="250" />
+
 The app is aiming to help people in Australia keeping safe from COVID-19.
 
 By choosing your currently living suburb and following your most visit suburbs, you may closely being kept updated about new cases every day in these suburbs.
@@ -37,15 +39,15 @@ Benefits are:
 
 Dashboard
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_dash.png" width="300" height="600" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_dash.jpg" width="300" height="600" /> <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_dash_dark.jpg" width="300" height="600" />
 
-Dashboard with full list
+MapView
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_dash_full.png" width="300" height="600" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_map.jpg" width="300" height="600" /> <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_map_tablet.png" width="800" height="600" />
 
-Settings tab
+Settings
 
-<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_settings.png" width="300" height="600" />
+<img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_settings.jpg" width="300" height="600" /> <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/Screenshot_settings_dark.jpg" width="300" height="600" />
 
 
 
