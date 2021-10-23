@@ -1,8 +1,6 @@
 package com.bhw.covid_suburb_au.dashboard
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +25,7 @@ fun AusMapView(data: CasesByStateViewObject) {
             .fillMaxWidth()
             .height(240.dp)
             .background(backgroundColor)
+            .verticalScroll(rememberScrollState()),
     ) {
         Box(
             contentAlignment = Alignment.Center,
