@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/android:api-30-alpha
         auth:
-          username: bhw8412@hotmail.com
+          username: bhw1899
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     environment:
       JVM_OPTS: -Xmx3200m
