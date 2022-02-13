@@ -18,20 +18,20 @@ android {
         properties.load(rootProject.file("local.properties").newDataInputStream())
     }
 
-    signingConfigs {
-        debug {
-            storeFile file('..\\keystore\\appKeyCovidAuDebug.jks')
-            storePassword 'appKey'
-            keyAlias 'appKey'
-            keyPassword 'appKey'
-        }
-        release {
-            storeFile file(properties.getProperty('keyStore.release.location'))
-            storePassword properties.getProperty('keyStore.release.storePassword')
-            keyAlias properties.getProperty('keyStore.release.keyAlias')
-            keyPassword properties.getProperty('keyStore.release.keyPassword')
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            storeFile file('..\\keystore\\appKeyCovidAuDebug.jks')
+//            storePassword 'appKey'
+//            keyAlias 'appKey'
+//            keyPassword 'appKey'
+//        }
+//        release {
+//            storeFile file(properties.getProperty('keyStore.release.location'))
+//            storePassword properties.getProperty('keyStore.release.storePassword')
+//            keyAlias properties.getProperty('keyStore.release.keyAlias')
+//            keyPassword properties.getProperty('keyStore.release.keyPassword')
+//        }
+//    }
 
     defaultConfig {
         applicationId "com.bhw.covid_suburb_au"
@@ -56,11 +56,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
-        debug {
-            signingConfig signingConfigs.debug
-        }
+//        debug {
+//            signingConfig signingConfigs.debug
+//        }
     }
 
     compileOptions {
