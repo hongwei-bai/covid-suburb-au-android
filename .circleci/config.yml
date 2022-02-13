@@ -28,7 +28,7 @@ jobs:
           name: Run Tests
           command: ./gradlew lint test
       # Then start the emulator and run the Instrumentation tests!
-      - android_tests:
+      - android/run-ui-tests:
           test-command: ./gradlew connectedDebugAndroidTest
           system-image: system-images;android-25;google_apis;x86
       # And finally run the release build
