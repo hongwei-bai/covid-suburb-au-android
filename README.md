@@ -1,6 +1,6 @@
 # covid-suburb-australia
 
-[![Build Status](https://hongwei-test1.top:8444/buildStatus/icon?job=covid-app-android)](https://hongwei-test1.top:8444/job/covid-app-android/)
+[![CircleCI](https://circleci.com/gh/hongwei-bai/covid-suburb-au-android/tree/main.svg?style=svg)](https://circleci.com/gh/hongwei-bai/covid-suburb-au-android/tree/main)
 
 <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/feature.png" width="512" height="250" />
 
