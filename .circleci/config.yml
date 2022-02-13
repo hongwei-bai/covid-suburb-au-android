@@ -32,19 +32,15 @@ jobs:
           name: Assemble debug build
           command: |
             ./gradlew assembleDebug
-      - run:
-          name: Assemble release build
-          command: |
-            ./gradlew assembleRelease
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          name: Upload reports
           path: app/build/reports
           destination: reports
-      - store_artifacts:
-          path: app/build/outputs/apk/debug
-          destination: debug
-      - store_artifacts:
-          path: app/build/outputs/apk/release
-          destination: release
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          name: Upload test results
           path: app/build/test-results
+      - store_artifacts:
+          name: Upload debug artifacts
+          path: app/build/outputs/apk/debug/*.apk
+          destination: debug
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
