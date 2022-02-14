@@ -30,8 +30,7 @@ jobs:
       # And finally run the release build
       - run:
           name: Assemble debug build
-          command: |
-            ./gradlew assembleDebug
+          command: ./gradlew assembleDebug
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           name: Upload reports
           path: app/build/reports
