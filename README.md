@@ -1,6 +1,31 @@
 # covid-suburb-australia
 
-[![CircleCI](https://circleci.com/gh/hongwei-bai/covid-suburb-au-android/tree/main.svg?style=svg)](https://circleci.com/gh/hongwei-bai/covid-suburb-au-android/tree/main)
+[![CircleCI](https://img.shields.io/circleci/build/github/hongwei-bai/covid-suburb-au-android?logo=CircleCI&style=plastic&token=97%3Ae2%3A9f%3Ae4%3Ad6%3Aa4%3Aa3%3Ab1%3A02%3Aa4%3Aab%3Aad%3Aa5%3Ac4%3A21%3A73)](https://circleci.com/gh/hongwei-bai/covid-suburb-au-android/tree/main)
+[![Unit Tests](https://img.shields.io/badge/unit%20tests-covered-83B81A?style=for-the-bedge&logo=Stitcher)](https://github.com/hongwei-bai/covid-suburb-au-android/tree/main/app/src/test/java/com/bhw/covid_suburb_au/util)
+[![Instrumented Tests](https://img.shields.io/badge/instrumented%20tests-not%20applicable-EE0000?style=for-the-bedge&logo=Stitcher)](./README.md)
+[![UI Tests](https://img.shields.io/badge/ui%20tests-not%20applicable-EE0000?style=for-the-bedge&logo=Stitcher)](./README.md)
+[![GitHub repo size](https://img.shields.io/github/repo-size/hongwei-bai/covid-suburb-au-android?logo=GitHub)](./README.md)
+[![GitHub last commit](https://img.shields.io/github/last-commit/hongwei-bai/covid-suburb-au-android?logo=Github)](./README.md)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/hongwei-bai/covid-suburb-au-android?logo=Github)](./README.md)
+[![GitHub Repo stars](https://img.shields.io/github/stars/hongwei-bai/covid-suburb-au-android?logo=Github&style=plastic)](./README.md)
+[![GitHub forks](https://img.shields.io/github/forks/hongwei-bai/covid-suburb-au-android?logo=GitHub&style=plastic)](./README.md)
+[![YouTube Video Views](https://img.shields.io/youtube/views/apAOzJ2zh6s?style=social)](https://www.youtube.com/watch?v=apAOzJ2zh6s)
+
+
+[![GitHub top language](https://img.shields.io/github/languages/top/hongwei-bai/covid-suburb-au-android?logo=Kotlin)](./README.md)
+[![Coroutines](https://img.shields.io/badge/kotlin%20coroutines-in%20use-83B81A?style=for-the-bedge&logo=Kotlin)](./README.md)
+[![Jetpack Compose](https://img.shields.io/badge/jetpack%20compose-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Dynamic Theming](https://img.shields.io/badge/dynamic%20theming-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Navigation](https://img.shields.io/badge/compose%20navigation-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Navigation Animation](https://img.shields.io/badge/navigation%20animation-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Compose Accompanist](https://img.shields.io/badge/compose%20accompanist-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Accompanist Placeholder](https://img.shields.io/badge/accompanist%20placeholder-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Room](https://img.shields.io/badge/jetpack%20room-in%20use-83B81A?style=for-the-bedge&logo=Jetpack%20Compose)](./README.md)
+[![Hilt](https://img.shields.io/badge/hilt-in%20use-83B81A?style=for-the-bedge&logo=Google)](./README.md)
+[![OkHttp Retrofit](https://img.shields.io/badge/okhttp%2Bretrofit-in%20use-83B81A?style=for-the-bedge&logo=Square)](./README.md)
+[![MVVM](https://img.shields.io/badge/architecture-mvvm-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
+[![Design Patterns](https://img.shields.io/badge/design%20patterns-in%20use-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
+[![SOLID](https://img.shields.io/badge/solid%20principles-in%20use-83B81A?style=for-the-bedge&logo=Laravel)](./README.md)
 
 <img src="https://raw.githubusercontent.com/hongwei-bai/covid-suburb-au-android/main/screenshots/feature.png" width="512" height="250" />
 
